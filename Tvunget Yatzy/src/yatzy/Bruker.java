@@ -2,7 +2,7 @@ package yatzy;
 
 import java.util.List;
 
-public class Spiller {
+public class Bruker {
 	private String burkernavn;
 	private String passord;
 	private String epost;

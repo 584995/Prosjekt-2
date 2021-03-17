@@ -5,7 +5,7 @@ import java.util.List;
 public class YatzySpill {
 	private String nummer;
 	private int antallSpillere;
-	private List<Spiller> spillere;
+	private List<Bruker> spillere;
 	private int rundeNr;
 	
 	
@@ -15,10 +15,10 @@ public class YatzySpill {
 	public void sendStartBeskjed() {
 		
 	}
-	public void sendPurring(Spiller spiller) {
+	public void sendPurring(Bruker spiller) {
 		
 	}
-	public void kastUtSpiller(Spiller spiller) {
+	public void kastUtSpiller(Bruker spiller) {
 		
 	}
 }
