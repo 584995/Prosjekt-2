@@ -1,4 +1,4 @@
-package Yatzy;
+package yatzy;
 
 public class Resultat {
 	private int poeng;

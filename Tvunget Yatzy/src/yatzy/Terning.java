@@ -1,4 +1,4 @@
-package Yatzy;
+package yatzy;
 
 public class Terning {
 	private int verdi;

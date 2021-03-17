@@ -1,4 +1,4 @@
-package Yatzy;
+package yatzy;
 
 import java.util.List;
 
