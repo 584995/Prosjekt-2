@@ -2,6 +2,8 @@ package yatzy;
 
 import java.util.List;
 
+import database.Bruker;
+
 public class YatzySpill {
 	private String nummer;
 	private int antallSpillere;

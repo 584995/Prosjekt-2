@@ -6,7 +6,15 @@
 	<persistence-unit name="brukerPU" transaction-type="JTA">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>DAT109LocalDS</jta-data-source>
-		<class>yatzy.Spiller</class>
+		<class>database.Bruker</class>
+		<properties>
+			<property name="eclipselink.weaving" value="false" />
+		</properties>
+	</persistence-unit>
+	<persistence-unit name="resultatPU" transaction-type="JTA">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>DAT109LocalDS</jta-data-source>
+		<class>database.Resultat</class>
 		<properties>
 			<property name="eclipselink.weaving" value="false" />
 		</properties>
