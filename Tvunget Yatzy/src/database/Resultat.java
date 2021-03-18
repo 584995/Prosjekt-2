@@ -14,6 +14,7 @@ public class Resultat {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	private boolean ferdig;
 	private String enere;
 	private String toere;
 	private String treere;
@@ -34,6 +35,7 @@ public class Resultat {
 	List<Bruker> spillere;
 
 	public Resultat() {
+		setFerdig(false);
 		enere = "";
 		toere = "";
 		treere = "";
@@ -112,6 +114,14 @@ public class Resultat {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public boolean isFerdig() {
+		return ferdig;
+	}
+
+	public void setFerdig(boolean ferdig) {
+		this.ferdig = ferdig;
 	}
 
 	public String getEnere() {
@@ -241,5 +251,6 @@ public class Resultat {
 	public void setSpillere(List<Bruker> spillere) {
 		this.spillere = spillere;
 	}
+
 
 }

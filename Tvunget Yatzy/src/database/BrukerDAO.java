@@ -16,6 +16,10 @@ public class BrukerDAO {
 		em.persist(nyBruker);
 	}
 	
+	public void oppdaterBruker(Bruker bruker) {
+		em.merge(bruker);
+	}
+	
 	public List<Bruker> hentAlleBrukere() {
 		return em.createQuery("SELECT b FROM bruker b ",Bruker.class).getResultList();
 	}

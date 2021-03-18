@@ -16,6 +16,10 @@ public class ResultatDAO {
 		em.persist(nyttResultat);
 	}
 	
+	public void oppdaterResultat(Resultat resultat) {
+		em.merge(resultat);
+	}
+	
 	public List<Resultat> hentAlleResultat() {
 		return em.createQuery("SELECT r FROM resultat r",Resultat.class).getResultList();
 	}

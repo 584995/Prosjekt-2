@@ -18,6 +18,7 @@ public class Bruker {
 	private String passord;
 	private int mobil;
 	private String epost;
+	private int purringer;
 	
 	@ManyToMany
 	@JoinTable(
@@ -33,6 +34,7 @@ public class Bruker {
 		this.passord = passord;
 		this.mobil = mobil;
 		this.epost = epost;
+		purringer = 0;
 	}
 	
 	public void leggTilResultat (Resultat resultat) {
@@ -82,6 +84,14 @@ public class Bruker {
 
 	public void setResultater(List<Resultat> resultater) {
 		this.resultater = resultater;
+	}
+
+	public int getPurringer() {
+		return purringer;
+	}
+
+	public void setPurringer(int purringer) {
+		this.purringer = purringer;
 	}
 	
 	
