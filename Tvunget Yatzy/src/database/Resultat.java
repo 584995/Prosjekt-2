@@ -29,14 +29,83 @@ public class Resultat {
 	private String hus;
 	private String sjanse;
 	private String yatzy;
-	
+
 	@ManyToMany(mappedBy = "resultater")
 	List<Bruker> spillere;
-	
-	public Resultat () {
 
+	public Resultat() {
+		enere = "";
+		toere = "";
+		treere = "";
+		firere = "";
+		femmere = "";
+		seksere = "";
+		ett_par = "";
+		to_par = "";
+		tre_like = "";
+		fire_like = "";
+		liten_straight = "";
+		stor_straight = "";
+		hus = "";
+		sjanse = "";
+		yatzy = "";
 	}
 
+	public void leggTilKolonner(int antall) {
+		for (int i = 0; i < antall; i++) {
+			enere += "000000000000000";
+			toere += "000000000000000";
+			treere += "000000000000000";
+			firere += "000000000000000";
+			femmere += "000000000000000";
+			seksere += "000000000000000";
+			ett_par += "000000000000000";
+			to_par += "000000000000000";
+			tre_like += "000000000000000";
+			fire_like += "000000000000000";
+			liten_straight += "000000000000000";
+			stor_straight += "000000000000000";
+			hus += "000000000000000";
+			sjanse += "000000000000000";
+			yatzy += "000000000000000";
+		}
+	}
+
+	public void fjernKolonne(int pos) {
+
+		enere = fjernKolonnebit(enere, pos);
+		toere = fjernKolonnebit(toere, pos);
+		treere = fjernKolonnebit(treere, pos);
+		firere = fjernKolonnebit(firere, pos);
+		femmere = fjernKolonnebit(femmere, pos);
+		seksere = fjernKolonnebit(seksere, pos);
+		ett_par = fjernKolonnebit(ett_par, pos);
+		to_par = fjernKolonnebit(to_par, pos);
+		tre_like = fjernKolonnebit(tre_like, pos);
+		fire_like = fjernKolonnebit(fire_like, pos);
+		liten_straight = fjernKolonnebit(liten_straight, pos);
+		stor_straight = fjernKolonnebit(stor_straight, pos);
+		hus = fjernKolonnebit(hus, pos);
+		sjanse = fjernKolonnebit(sjanse, pos);
+		yatzy =  fjernKolonnebit(yatzy, pos);
+		
+	}
+
+	public String fjernKolonnebit (String rad, int pos) {
+		if (pos*15 == rad.length())
+			return rad.substring(0, 0 + pos*15);
+		return rad.substring(0, 0 + pos*15) + rad.substring(15 + pos*15);
+	}
+	
+	public void leggTilSpillere (List<Bruker> spillere) {
+		for (Bruker e : spillere)
+			this.spillere.add(e);
+	}
+	
+	public void fjernSpiller (Bruker spiller) {
+		spillere.remove(spiller);
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -172,7 +241,5 @@ public class Resultat {
 	public void setSpillere(List<Bruker> spillere) {
 		this.spillere = spillere;
 	}
-	
-	
-	
+
 }

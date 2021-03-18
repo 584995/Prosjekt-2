@@ -1,9 +1,9 @@
 package yatzy;
 
 public class Terning {
-	private int verdi;
 	
-	public void trill() {
-		verdi =(int) (1 + (Math.random()*5));
-	}
+	public int trill() {
+		return 1 + (int)(Math.random()*5);
+	}	
+	
 }

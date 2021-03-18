@@ -24,12 +24,26 @@ public class Bruker {
 			  name = "bruker_resultat", 
 			  joinColumns = @JoinColumn(name = "brukernavn"), 
 			  inverseJoinColumns = @JoinColumn(name = "id"))
-	private List<Resultat> resultater;
-
-	public Bruker () {
-		
+	private List<Resultat> resultater;	
+	
+	public Bruker() {}
+	
+	public Bruker(String brukernavn, String passord, int mobil, String epost) {
+		this.brukernavn = brukernavn;
+		this.passord = passord;
+		this.mobil = mobil;
+		this.epost = epost;
 	}
 	
+	public void leggTilResultat (Resultat resultat) {
+		resultater.add(resultat);
+	}
+	
+	public void fjernResultat (Resultat resultat) {
+		resultater.remove(resultat);
+	}
+
+
 	public String getBrukernavn() {
 		return brukernavn;
 	}

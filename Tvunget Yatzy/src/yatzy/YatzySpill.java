@@ -3,13 +3,22 @@ package yatzy;
 import java.util.List;
 
 import database.Bruker;
+import database.Resultat;
 
 public class YatzySpill {
-	private String nummer;
-	private int antallSpillere;
 	private List<Bruker> spillere;
-	private int rundeNr;
+	private Resultat resultat;
+	private Terningkast terningkast;
 	
+	public YatzySpill (List<Bruker> spillere) {
+		this.spillere = spillere;
+		resultat = new Resultat();
+		resultat.leggTilKolonner(spillere.size());
+		resultat.leggTilSpillere(spillere);
+		for (Bruker e : spillere)
+			e.leggTilResultat(resultat);
+		terningkast = new Terningkast();
+	}
 	
 	public void spillRunde() {
 		
