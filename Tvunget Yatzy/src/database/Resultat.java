@@ -11,6 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "yatzy", name = "resultat")
 public class Resultat {
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -35,7 +36,7 @@ public class Resultat {
 	List<Bruker> spillere;
 
 	public Resultat() {
-		setFerdig(false);
+		ferdig = false;
 		enere = "";
 		toere = "";
 		treere = "";

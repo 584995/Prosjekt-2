@@ -2,24 +2,26 @@ DROP SCHEMA IF EXISTS yatzy CASCADE;
 CREATE SCHEMA yatzy;
 SET search_path = yatzy;
 
-CREATE TABLE Bruker
+CREATE TABLE bruker
 (
  
-	Brukernavn         	CHARACTER VARYING (20) PRIMARY KEY,
-	Passord        		CHARACTER VARYING (100),
-	Mobil          		INTEGER,
-	Epost          		CHARACTER VARYING (50)
+	brukernavn         	CHARACTER VARYING (20) PRIMARY KEY,
+	passord        		CHARACTER VARYING (100),
+	mobil          		INTEGER,
+	epost          		CHARACTER VARYING (50),
+	purringer			INTEGER
 
 );
 
-INSERT INTO Bruker VALUES 
-	('Vebbis', 'qwerqwer', '90415969', 'vebjoern.vaardal@gmail.com'),
-	('Vebbis98', 'abcdefgh', '90415969', 'vebjoern.vaardal@gmail.com');
+INSERT INTO bruker VALUES 
+	('Vebbis', 'qwerqwer', '90415969', 'vebjoern.vaardal@gmail.com', 0),
+	('Vebbis98', 'abcdefgh', '90415969', 'vebjoern.vaardal@gmail.com', 0);
 	
-CREATE TABLE Resultat
+CREATE TABLE resultat
 (
  
-	GameID 				SERIAL PRIMARY KEY,
+	id 					SERIAL PRIMARY KEY,
+	ferdig				BOOLEAN,
 	enere				CHARACTER VARYING (90) NOT NULL, 
 	toere				CHARACTER VARYING (90) NOT NULL,
 	treere				CHARACTER VARYING (90) NOT NULL,
@@ -38,25 +40,25 @@ CREATE TABLE Resultat
 
 );
 
-INSERT INTO Resultat VALUES 
-	(DEFAULT,
+INSERT INTO resultat VALUES 
+	(DEFAULT, false,
 	'000000000000000000000000000000', '000000000000000000000000000000', '000000000000000000000000000000', 
 	'000000000000000000000000000000', '000000000000000000000000000000', '000000000000000000000000000000', 
 	'000000000000000000000000000000', '000000000000000000000000000000', '000000000000000000000000000000', 
 	'000000000000000000000000000000', '000000000000000000000000000000', '000000000000000000000000000000', 
 	'000000000000000000000000000000', '000000000000000000000000000000', '000000000000000000000000000000');
 	
-CREATE TABLE Bruker_Resultat
+CREATE TABLE bruker_resultat
 (
  
-	GameID 				INTEGER,
-	Brukernavn			CHARACTER VARYING (20),
-	PRIMARY KEY (GameID, Brukernavn),
-	FOREIGN KEY (GameID) REFERENCES Resultat(GameID),
-	FOREIGN KEY (Brukernavn) REFERENCES Bruker(Brukernavn)
+	bruker_id			CHARACTER VARYING (20),
+	resultat_id 		INTEGER,
+	PRIMARY KEY (bruker_id, resultat_id),
+	FOREIGN KEY (bruker_id) REFERENCES bruker(brukernavn),
+	FOREIGN KEY (resultat_id) REFERENCES resultat(id)
 
 );
 
-INSERT INTO Bruker_Resultat VALUES 
-	(1, 'Vebbis'),
-	(1, 'Vebbis98');
+INSERT INTO bruker_resultat VALUES 
+	('Vebbis', 1),
+	('Vebbis98', 1);
