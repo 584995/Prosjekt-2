@@ -13,7 +13,11 @@ import javax.ejb.EJB;
 
 import database.Bruker;
 import database.BrukerDAO;
-
+/**
+ * 
+ * @author Prosjekt 2
+ *
+ */
 @WebServlet("/Registrering")
 public class Registrering extends HttpServlet {
 	private static final long serialVersionUID = 1L;
