@@ -24,15 +24,18 @@
 			</div>
 			<div>
 				<label for="passordRepetert">Repeter passord:</label> 
-				<input type="password" name="passordRepetert" value="${passordRepetert}" placeholder="Passord" required/> 
+				<input type="password" name="passordRepetert" value="${passordRepetert}" placeholder="Passord" required/>
+				<font color="red">${passordRepetertFeilmelding}</font> 
 			</div>
 			<div>
 				<label for="mobil">Mobil (8 siffer):</label> 
-				<input type="text" name="mobil" value="${mobil}" placeholder="Mobilnummer" required/> 
+				<input type="text" name="mobil" value="${mobil}" placeholder="Mobilnummer" required/>
+				<font color="red">${mobilFeilmelding}</font>  
 			</div>
 			<div>
 				<label for="epost">E-post:</label> 
 				<input type="text" name="epost" value="${epost}" placeholder="E-post" required/> 
+				<font color="red">${epostFeilmelding}</font> 
 			</div>
 			<div>
 				<button type="submit">Registrer</button>

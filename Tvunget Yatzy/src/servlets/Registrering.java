@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Test.Validator;
+
 import javax.ejb.EJB;
 
 import database.Bruker;
@@ -24,6 +26,7 @@ public class Registrering extends HttpServlet {
 
 	@EJB
 	private BrukerDAO brukerDAO;
+	Validator validator = new Validator();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -61,15 +64,49 @@ public class Registrering extends HttpServlet {
 		request.getSession().invalidate();
 
 		// Lagrer bruker-info i sesjonen.
-		request.getSession().setAttribute("brukernavn", brukernavn);
-		request.getSession().setAttribute("passord", passord);
-		request.getSession().setAttribute("passordRepetert", passordRepetert);
-		request.getSession().setAttribute("mobil", mobil);
-		request.getSession().setAttribute("epost", epost);
-
-		// Lagrer ny bruker og logger inn, om mulig.
 		Boolean feil = false;
-		Bruker nyBruker = new Bruker(brukernavn, passord, Integer.parseInt(mobil), epost);
+		
+		if(!validator.brukernavnSjekk(brukernavn)) {
+			request.getSession().setAttribute("brukernavnFeilmelding", "Ugyldig brukernavn.");
+			feil = true;
+		} else {
+			request.getSession().setAttribute("brukernavn", brukernavn);			
+		}
+		
+		if(!validator.passordSjekk(passord)) {
+			//Skriver ingen feilmelding nå
+			request.getSession().setAttribute("passordFeilmelding", "Ugyldig passord.");
+			feil = true;
+		} else {
+			request.getSession().setAttribute("passord", passord);
+		}
+		
+		if(!passordRepetert.equals(passord)) {
+			request.getSession().setAttribute("passordRepetertFeilmelding", "Passord må være likt.");
+			feil = true;
+		} else {
+			request.getSession().setAttribute("passordRepetert", passordRepetert);
+		}
+		
+		if(!validator.mobilSjekk(mobil)) {
+			request.getSession().setAttribute("mobilFeilmelding", "Ugyldig mobilnummer.");
+			feil = true;
+		} else {
+			request.getSession().setAttribute("mobil", mobil);
+		}
+		
+		if(!validator.epostSjekk(epost)) {
+			request.getSession().setAttribute("epostFeilmelding", "Ugyldig epost.");
+			feil = true;
+		} else {
+			request.getSession().setAttribute("epost", epost);
+		}
+		
+		
+		// Lagrer ny bruker og logger inn, om mulig.	
+		if(!feil) {
+			Bruker nyBruker = new Bruker(brukernavn, passord, Integer.parseInt(mobil), epost);
+		
 		try {
 			brukerDAO.lagreNyBruker(nyBruker);
 			Cookie innlogget = new Cookie("brukernavn", brukernavn);
@@ -80,6 +117,7 @@ public class Registrering extends HttpServlet {
 			request.getSession().setAttribute("brukernavnFeilmelding",
 					"Bruker med dette brukernavnet er allerede registrert");
 		}
+	}
 
 		// Henviser til registrering-servlet.
 		if (feil)
