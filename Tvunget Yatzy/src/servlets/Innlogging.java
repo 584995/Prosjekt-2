@@ -75,7 +75,7 @@ public class Innlogging extends HttpServlet {
 		
 		// Henviser til innlogging-servlet.
 		else {
-			request.setAttribute("feilmelding", "Ugyldig brukernavn og/eller passord");
+			request.getSession().setAttribute("feilmelding", "Ugyldig brukernavn og/eller passord");
 			response.sendRedirect("Innlogging");
 		}
 	}

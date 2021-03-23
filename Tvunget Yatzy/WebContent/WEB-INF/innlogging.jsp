@@ -13,11 +13,11 @@
 			<font color="red">${feilmelding}</font>
 			<div>
 				<label for="brukernavn">Brukernavn:</label>
-				<input type="text" name="brukernavn" placeholder="Brukernavn"/>
+				<input type="text" name="brukernavn" value="${brukernavn}" placeholder="Brukernavn"/>
 			</div>
 			<div>
 				<label for="passord">Passord:</label> 
-				<input type="password" name="passord" placeholder="Passord"/>
+				<input type="password" name="passord" value="${passord}" placeholder="Passord"/>
 			</div>
 			<div>
 				<button type="submit" >Logg inn</button>

@@ -22,5 +22,8 @@
 		<p>Velkommen til Tvungen Yatzy!
 		</p>
 	</div>
+	<form action="Utlogging" method="post">
+		<button type="submit" >Logg ut</button>
+	</form>
 </body>
 </html>
