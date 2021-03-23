@@ -38,7 +38,7 @@ public class Registrering extends HttpServlet {
 		} catch (Throwable e) {
 		}
 		if (loggetinn != null)
-			response.sendRedirect("Hovedmeny");
+			getServletContext().getRequestDispatcher("/Hovedmeny").forward(request, response);
 
 		// Henviser til registrering-side.
 		request.getRequestDispatcher("WEB-INF/registrering.jsp").forward(request, response);

@@ -37,7 +37,7 @@ public class Innlogging extends HttpServlet {
 		} catch (Throwable e) {
 		}
 		if (loggetinn != null)
-			response.sendRedirect("Hovedmeny");
+			getServletContext().getRequestDispatcher("/Hovedmeny").forward(request, response);
 
 		// Henviser til innlogging-side.
 		request.getRequestDispatcher("WEB-INF/innlogging.jsp").forward(request, response);
@@ -59,7 +59,8 @@ public class Innlogging extends HttpServlet {
 		// Sjekker for brukernavn/passord.
 		boolean logginn = false;
 		Bruker bruker = null;
-		bruker = brukerDAO.hentBruker(brukernavn);
+		if (brukernavn != null)
+			bruker = brukerDAO.hentBruker(brukernavn);
 		if (bruker != null) {
 				logginn = passord.equals(bruker.getPassord());
 		}

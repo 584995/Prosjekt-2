@@ -13,7 +13,7 @@
 			<font color="red">${feilmelding}</font>
 			<div>
 				<label for="brukernavn">Brukernavn:</label>
-				<input type="text" name="mobil" placeholder="Brukernavn"/>
+				<input type="text" name="brukernavn" placeholder="Brukernavn"/>
 			</div>
 			<div>
 				<label for="passord">Passord:</label> 
