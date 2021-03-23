@@ -14,8 +14,8 @@
 </head>
 <body>
 	<div id="navigasjon">
-		<a href="Start nytt spill"><button></button></a>
-		<a href="Pågående spill"><button></button></a>
+		<a href="">Start nytt spill<button></button></a>
+		<a href="">Pågående spill<button></button></a>
 		<button onclick="loggUt()">Logg ut</button>
 	</div>
 	<div id="main-wrapper">
