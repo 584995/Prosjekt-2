@@ -5,6 +5,6 @@
          id="WebApp_ID" 
          version="3.0">
          <welcome-file-list>
-    		<welcome-file>Registrering</welcome-file>
+    		<welcome-file>Innlogging</welcome-file>
   		</welcome-file-list>
 </web-app>

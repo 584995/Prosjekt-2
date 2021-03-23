@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.Cookie;
 import javax.ejb.EJB;
 
 import database.Bruker;
@@ -18,8 +17,8 @@ import database.BrukerDAO;
  * @author Prosjekt 2
  *
  */
-@WebServlet("/Registrering")
-public class Registrering extends HttpServlet {
+@WebServlet("/Innlogging")
+public class Innlogging extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -29,7 +28,7 @@ public class Registrering extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("UTF-8");
-
+		
 		// Henviser til hovedmeny-servlet dersom innlogget.
 		Cookie loggetinn = null;
 		try {
@@ -40,9 +39,9 @@ public class Registrering extends HttpServlet {
 		if (loggetinn != null)
 			response.sendRedirect("Hovedmeny");
 
-		// Henviser til registrering-side.
-		request.getRequestDispatcher("WEB-INF/registrering.jsp").forward(request, response);
-
+		// Henviser til innlogging-side.
+		request.getRequestDispatcher("WEB-INF/innlogging.jsp").forward(request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -53,41 +52,31 @@ public class Registrering extends HttpServlet {
 		// Henter info fra bruker.
 		String brukernavn = request.getParameter("brukernavn");
 		String passord = request.getParameter("passord");
-		String passordRepetert = request.getParameter("passordRepetert");
-		String mobil = request.getParameter("mobil");
-		String epost = request.getParameter("epost");
-
+		
 		// Fjerner tidligere feilmeldinger.
 		request.getSession().invalidate();
-
-		// Lagrer bruker-info i sesjonen.
-		request.getSession().setAttribute("brukernavn", brukernavn);
-		request.getSession().setAttribute("passord", passord);
-		request.getSession().setAttribute("passordRepetert", passordRepetert);
-		request.getSession().setAttribute("mobil", mobil);
-		request.getSession().setAttribute("epost", epost);
-
-		// Lagrer ny bruker og logger inn, om mulig.
-		Boolean feil = false;
-		Bruker nyBruker = new Bruker(brukernavn, passord, Integer.parseInt(mobil), epost);
-		try {
-			brukerDAO.lagreNyBruker(nyBruker);
-			Cookie innlogget = new Cookie("brukernavn", brukernavn);
-			innlogget.setMaxAge(60 * 60 * 24 * 30);
-			response.addCookie(innlogget);
-		} catch (Throwable e) {
-			feil = true;
-			request.getSession().setAttribute("brukernavnFeilmelding",
-					"Bruker med dette brukernavnet er allerede registrert");
+		
+		// Sjekker for brukernavn/passord.
+		boolean logginn = false;
+		Bruker bruker = null;
+		bruker = brukerDAO.hentBruker(brukernavn);
+		if (bruker != null) {
+				logginn = passord.equals(bruker.getPassord());
 		}
 
-		// Henviser til registrering-servlet.
-		if (feil)
-			response.sendRedirect("Registrering");
-		// Henviser til registreringbekreftelse-side.
-		else
-			request.getRequestDispatcher("WEB-INF/registreringbekreftelse.jsp").forward(request, response);
-
+		// Logger inn og henviser til hovedmeny-servlet.
+		if (logginn) {
+			Cookie innlogget = new Cookie("brukernavn", brukernavn);
+			innlogget.setMaxAge(60*60*24*30);
+			response.addCookie(innlogget);
+			response.sendRedirect("Hovedmeny");
+		} 
+		
+		// Henviser til innlogging-servlet.
+		else {
+			request.setAttribute("feilmelding", "Ugyldig brukernavn og/eller passord");
+			response.sendRedirect("Innlogging");
+		}
 	}
 
 }
