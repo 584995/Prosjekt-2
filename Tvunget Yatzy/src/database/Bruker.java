@@ -45,7 +45,14 @@ public class Bruker {
 		resultater.remove(resultat);
 	}
 
-
+	public Resultat getResultatById (int id) {
+		for (Resultat e : resultater) {
+			if (e.getId() == id)
+				return e;
+		}
+		return null;
+	}
+	
 	public String getBrukernavn() {
 		return brukernavn;
 	}

@@ -1,5 +1,6 @@
 package database;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -14,7 +15,7 @@ public class Resultat {
 	
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private int id;
 	private boolean ferdig;
 	private String enere;
 	private String toere;
@@ -107,6 +108,26 @@ public class Resultat {
 	
 	public void fjernSpiller (Bruker spiller) {
 		spillere.remove(spiller);
+	}
+	
+	public List<String> lagListe () {
+		List<String> liste = new ArrayList<String>();
+		liste.add(enere);
+		liste.add(toere);
+		liste.add(treere);
+		liste.add(firere);
+		liste.add(femmere);
+		liste.add(seksere);
+		liste.add(ett_par);
+		liste.add(to_par);
+		liste.add(tre_like);
+		liste.add(fire_like);
+		liste.add(liten_straight);
+		liste.add(stor_straight);
+		liste.add(hus);
+		liste.add(sjanse);
+		liste.add(yatzy);
+		return liste;
 	}
 	
 	public Integer getId() {
