@@ -21,7 +21,7 @@ public class ResultatDAO {
 	}
 	
 	public List<Resultat> hentAlleResultat() {
-		return em.createQuery("SELECT r FROM resultat r",Resultat.class).getResultList();
+		return em.createQuery("SELECT r FROM Resultat r",Resultat.class).getResultList();
 	}
 	
 	public Resultat hentResultat(Integer id) {

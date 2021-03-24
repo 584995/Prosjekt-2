@@ -21,10 +21,9 @@ public class Bruker {
 	private int purringer;
 	
 	@ManyToMany
-	@JoinTable(
-			  name = "bruker_resultat", 
-			  joinColumns = @JoinColumn(name = "brukernavn"), 
-			  inverseJoinColumns = @JoinColumn(name = "id"))
+	@JoinTable(name = "bruker_resultat", schema = "yatzy",
+			  joinColumns = @JoinColumn(name = "bruker_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "resultat_id"))
 	private List<Resultat> resultater;	
 	
 	public Bruker() {}

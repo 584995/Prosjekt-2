@@ -21,7 +21,7 @@ public class BrukerDAO {
 	}
 	
 	public List<Bruker> hentAlleBrukere() {
-		return em.createQuery("SELECT b FROM bruker b ",Bruker.class).getResultList();
+		return em.createQuery("SELECT b FROM Bruker b ",Bruker.class).getResultList();
 	}
 	
 	public Bruker hentBruker(String brukernavn) {
