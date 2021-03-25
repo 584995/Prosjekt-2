@@ -8,13 +8,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import Test.Validator;
-
 import javax.ejb.EJB;
 
 import database.Bruker;
 import database.BrukerDAO;
+import test.Validator;
 /**
  * 
  * @author Prosjekt 2
@@ -33,18 +31,21 @@ public class Registrering extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 
-		// Henviser til hovedmeny-servlet dersom innlogget.
+		// Sjekker om brukeren er innlogget.
 		Cookie loggetinn = null;
 		try {
 			loggetinn = Arrays.stream(request.getCookies()).filter(c -> c.getName().equalsIgnoreCase("brukernavn"))
 					.findAny().get();
 		} catch (Throwable e) {
 		}
+		
+		// Henviser til hovedmeny-servlet.
 		if (loggetinn != null)
-			getServletContext().getRequestDispatcher("/Hovedmeny").forward(request, response);
+			response.sendRedirect("Hovedmeny");
 
 		// Henviser til registrering-side.
-		request.getRequestDispatcher("WEB-INF/registrering.jsp").forward(request, response);
+		else
+			request.getRequestDispatcher("WEB-INF/registrering.jsp").forward(request, response);
 
 	}
 
@@ -110,7 +111,7 @@ public class Registrering extends HttpServlet {
 		try {
 			brukerDAO.lagreNyBruker(nyBruker);
 			Cookie innlogget = new Cookie("brukernavn", brukernavn);
-			innlogget.setMaxAge(60 * 60 * 24 * 30);
+			innlogget.setMaxAge(60 * 60 * 24 * 7);
 			response.addCookie(innlogget);
 		} catch (Throwable e) {
 			feil = true;

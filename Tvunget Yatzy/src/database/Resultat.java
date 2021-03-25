@@ -16,7 +16,8 @@ public class Resultat {
 	@Id
 	@GeneratedValue
 	private int id;
-	private boolean ferdig;
+	private boolean startet;
+	private String ferdig_dato;
 	private String enere;
 	private String toere;
 	private String treere;
@@ -37,7 +38,8 @@ public class Resultat {
 	List<Bruker> spillere;
 
 	public Resultat() {
-		ferdig = false;
+		startet = false;
+		ferdig_dato = null;
 		enere = "";
 		toere = "";
 		treere = "";
@@ -134,16 +136,20 @@ public class Resultat {
 		return id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public boolean isStartet() {
+		return startet;
 	}
 
-	public boolean isFerdig() {
-		return ferdig;
+	public void setStartet(boolean ferdig) {
+		this.startet = ferdig;
 	}
 
-	public void setFerdig(boolean ferdig) {
-		this.ferdig = ferdig;
+	public String getFerdig_dato() {
+		return ferdig_dato;
+	}
+
+	public void setFerdig_dato(String ferdig_dato) {
+		this.ferdig_dato = ferdig_dato;
 	}
 
 	public String getEnere() {

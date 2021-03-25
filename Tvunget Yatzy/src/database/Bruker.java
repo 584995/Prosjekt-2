@@ -52,6 +52,13 @@ public class Bruker {
 		return null;
 	}
 	
+	public boolean erISpill () {
+		for (Resultat e : resultater)
+			if (e.getFerdig_dato() == null)
+				return true;
+		return false;
+	}
+	
 	public String getBrukernavn() {
 		return brukernavn;
 	}

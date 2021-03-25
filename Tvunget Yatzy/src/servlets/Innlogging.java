@@ -29,18 +29,21 @@ public class Innlogging extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 		
-		// Henviser til hovedmeny-servlet dersom innlogget.
+		// Sjekker om brukeren er innlogget.
 		Cookie loggetinn = null;
 		try {
 			loggetinn = Arrays.stream(request.getCookies()).filter(c -> c.getName().equalsIgnoreCase("brukernavn"))
 					.findAny().get();
 		} catch (Throwable e) {
 		}
+		
+		// Henviser til hovedmeny-servlet.
 		if (loggetinn != null)
-			getServletContext().getRequestDispatcher("/Hovedmeny").forward(request, response);
-
+			response.sendRedirect("Hovedmeny");
+		
 		// Henviser til innlogging-side.
-		request.getRequestDispatcher("WEB-INF/innlogging.jsp").forward(request, response);
+		else
+			request.getRequestDispatcher("WEB-INF/innlogging.jsp").forward(request, response);
 		
 	}
 
@@ -68,7 +71,7 @@ public class Innlogging extends HttpServlet {
 		// Logger inn og henviser til hovedmeny-servlet.
 		if (logginn) {
 			Cookie innlogget = new Cookie("brukernavn", brukernavn);
-			innlogget.setMaxAge(60*60*24*30);
+			innlogget.setMaxAge(60 * 60 * 24 * 7);
 			response.addCookie(innlogget);
 			response.sendRedirect("Hovedmeny");
 		} 

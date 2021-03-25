@@ -14,5 +14,8 @@
 		${mobil}<br /> 
 		${epost}
 	</p>
+	<form action="Hovedmeny" method="get">
+		<button type="submit" >Gå til hovedmenyen</button>
+	</form>
 </body>
 </html>

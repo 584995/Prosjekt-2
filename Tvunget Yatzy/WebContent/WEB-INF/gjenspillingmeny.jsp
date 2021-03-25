@@ -16,7 +16,11 @@
 				<select id="resultatId" name="resultatId">
 					<option value="" selected>-----Velg_et_spill-----</option>
 					<c:forEach items="${resultater}" var="d">
-						<option value="${d.id}">${d.id}</option>
+						<c:choose>
+							<c:when test="${d.ferdig_dato != null}">
+								<option value="${d.id}">${d.ferdig_dato}</option>
+							</c:when>
+						</c:choose>
 					</c:forEach>
 				</select>
 			</div>
