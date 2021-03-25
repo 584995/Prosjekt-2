@@ -97,7 +97,7 @@ public class Resultat {
 		
 	}
 
-	public String fjernKolonnebit (String rad, int pos) {
+	private String fjernKolonnebit (String rad, int pos) {
 		if (pos*15 == rad.length())
 			return rad.substring(0, 0 + pos*15);
 		return rad.substring(0, 0 + pos*15) + rad.substring(15 + pos*15);
