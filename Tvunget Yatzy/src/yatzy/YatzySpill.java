@@ -1,5 +1,6 @@
 package yatzy;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import database.Bruker;
@@ -37,8 +38,33 @@ public class YatzySpill {
 	public void kastUtSpiller(Bruker spiller) {
 		
 	}
+	
 	public Bruker sinTur(Resultat resultat) {
+		List<String> tabell = resultat.lagListe();
+		List<Bruker> spillere = resultat.getSpillere();
+		for (String s : tabell) {
+			for (int i = 0; i < spillere.size(); i++) {
+				if (i < spillere.size() - 1) {
+					if (s.substring(i * 15 + 10, (i+1) * 15).equals("00000"))
+						return spillere.get(i);
+				} else {
+					if (s.substring(i * 15 + 10).equals("00000"))
+						return spillere.get(i);
+				}
+			}
+		}
+		resultat.setFerdig_dato(LocalDate.now().getDayOfMonth() + "." + LocalDate.now().getMonthValue() + "." + LocalDate.now().getYear());
 		return null;
+	}
+	
+	public int spillerPos (Resultat resultat, Bruker bruker) {
+		int i = 0;
+		for (Bruker b : resultat.getSpillere()) {
+			if (b.equals(bruker))
+				return i;
+			i++;
+		}
+		return -1;		
 	}
 	
 	public String velgTerninger(List<Boolean> behold, List<Integer> verdier) {
