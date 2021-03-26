@@ -50,10 +50,10 @@ public class Hovedmeny extends HttpServlet {
 			
 			Bruker bruker = brukerDAO.hentBruker(loggetinn.getValue());
 			boolean erISpill = bruker.erISpill();
-			request.setAttribute("erISpill", erISpill);
+			request.getSession().setAttribute("erISpill", erISpill);
 			List<Resultat> resultater = resultatDAO.hentAlleResultat().stream()
 					.filter(a -> !a.isStartet()).collect(Collectors.toList());
-			request.setAttribute("resultater", resultater);		
+			request.getSession().setAttribute("resultater", resultater);		
 			
 			request.getRequestDispatcher("WEB-INF/hovedmeny.jsp").forward(request, response);
 			

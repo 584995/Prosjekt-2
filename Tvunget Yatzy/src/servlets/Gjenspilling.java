@@ -51,7 +51,7 @@ public class Gjenspilling extends HttpServlet {
 			}
 			request.getSession().invalidate();
 			List<Resultat> resultater = brukerDAO.hentBruker(loggetinn.getValue()).getResultater();
-			request.setAttribute("resultater", resultater);	
+			request.getSession().setAttribute("resultater", resultater);	
 			
 			//Henviser til gjenspillingmeny-side ved manglende resultat-id.
 			if (resId < 1)
@@ -61,7 +61,7 @@ public class Gjenspilling extends HttpServlet {
 			else {
 			Resultat resultat = brukerDAO.hentBruker(loggetinn.getValue()).getResultatById(resId);
 			List<String> resultatListe = resultat.lagListe();
-			request.setAttribute("resultatListe", resultatListe);
+			request.getSession().setAttribute("resultatListe", resultatListe);
 			request.getRequestDispatcher("WEB-INF/gjenspilling.jsp").forward(request, response);
 			}
 			
@@ -73,7 +73,7 @@ public class Gjenspilling extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String resId = request.getParameter("resId");
-		request.setAttribute("resId", resId);	
+		request.getSession().setAttribute("resId", resId);	
 		response.sendRedirect("Gjenspilling");
 		
 	}

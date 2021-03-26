@@ -14,6 +14,9 @@
 		<font>${resultat.id}</font>
 	</div>
 	<div>
+		<font>${resultat.enere}</font>
+	</div>
+	<div>
 		<c:forEach items="${brukere}" var="d">
 			<font>${d.brukernavn}</font>
 		</c:forEach>
@@ -22,6 +25,11 @@
 		<c:forEach items="${resultater}" var="d">
 			<font>${d.id}</font>
 		</c:forEach>
+	</div>
+	<div>
+		<form action="Test" method="post">
+			<button type="submit">Post</button>
+		</form>
 	</div>
 </body>
 </html>

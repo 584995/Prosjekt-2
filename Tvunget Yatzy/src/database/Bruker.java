@@ -59,6 +59,13 @@ public class Bruker {
 		return false;
 	}
 	
+	public Resultat aktivtSpill () {
+		for (Resultat r : resultater)
+			if (r.getFerdig_dato() != null)
+				return r;
+		return null;
+	}
+	
 	public String getBrukernavn() {
 		return brukernavn;
 	}

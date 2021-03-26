@@ -17,6 +17,7 @@ public class Resultat {
 	@GeneratedValue
 	private int id;
 	private boolean startet;
+	private int tur;
 	private String ferdig_dato;
 	private String enere;
 	private String toere;
@@ -39,6 +40,7 @@ public class Resultat {
 
 	public Resultat() {
 		startet = false;
+		tur = 0;
 		ferdig_dato = null;
 		enere = "";
 		toere = "";
@@ -132,6 +134,41 @@ public class Resultat {
 		return liste;
 	}
 	
+	public void lagreKast(int rad, String kast) {
+		
+		if (rad == 0) 
+			enere = enere.substring(0, tur * 5) + kast + enere.substring(tur * 5 + 5);
+		else if (rad == 1) 
+			toere = toere.substring(0, tur * 5) + kast + toere.substring(tur * 5 + 5);
+		else if (rad == 2) 
+			treere = treere.substring(0, tur * 5) + kast + treere.substring(tur * 5 + 5);
+		else if (rad == 3) 
+			firere = firere.substring(0, tur * 5) + kast + firere.substring(tur * 5 + 5);
+		else if (rad == 4) 
+			femmere = femmere.substring(0, tur * 5) + kast + femmere.substring(tur * 5 + 5);
+		else if (rad == 5) 
+			seksere = seksere.substring(0, tur * 5) + kast + seksere.substring(tur * 5 + 5);
+		else if (rad == 6) 
+			ett_par = ett_par.substring(0, tur * 5) + kast + ett_par.substring(tur * 5 + 5);
+		else if (rad == 7) 
+			to_par = to_par.substring(0, tur * 5) + kast + to_par.substring(tur * 5 + 5);
+		else if (rad == 8) 
+			tre_like = tre_like.substring(0, tur * 5) + kast + tre_like.substring(tur * 5 + 5);
+		else if (rad == 9) 
+			fire_like = fire_like.substring(0, tur * 5) + kast + fire_like.substring(tur * 5 + 5);
+		else if (rad == 10) 
+			liten_straight = liten_straight.substring(0, tur * 5) + kast + liten_straight.substring(tur * 5 + 5);
+		else if (rad == 11) 
+			stor_straight = stor_straight.substring(0, tur * 5) + kast + stor_straight.substring(tur * 5 + 5);
+		else if (rad == 12) 
+			hus = hus.substring(0, tur * 5) + kast + hus.substring(tur * 5 + 5);
+		else if (rad == 13) 
+			sjanse = sjanse.substring(0, tur * 5) + kast + sjanse.substring(tur * 5 + 5);
+		else if (rad == 14) 
+			yatzy = yatzy.substring(0, tur * 5) + kast + yatzy.substring(tur * 5 + 5);
+		
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -142,6 +179,14 @@ public class Resultat {
 
 	public void setStartet(boolean ferdig) {
 		this.startet = ferdig;
+	}
+
+	public int getTur() {
+		return tur;
+	}
+
+	public void setTur(int tur) {
+		this.tur = tur;
 	}
 
 	public String getFerdig_dato() {

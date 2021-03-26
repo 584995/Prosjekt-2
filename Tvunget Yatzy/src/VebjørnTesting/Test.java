@@ -30,18 +30,21 @@ public class Test extends HttpServlet {
 		List<Bruker> brukere = brukerDAO.hentAlleBrukere();
 		List<Resultat> resultater = resultatDAO.hentAlleResultat();
 		
-		request.setAttribute("bruker", bruker);
-		request.setAttribute("resultat", resultat);
-		request.setAttribute("brukere", brukere);
-		request.setAttribute("resultater", resultater);
-		
-		Bruker resultatbruk = resultat.getSpillere().get(0);
+		request.getSession().setAttribute("bruker", bruker);
+		request.getSession().setAttribute("resultat", resultat);
+		request.getSession().setAttribute("resultatEnere", resultat.getEnere());
+		request.getSession().setAttribute("brukere", brukere);
+		request.getSession().setAttribute("resultater", resultater);
 		
 		request.getRequestDispatcher("WEB-INF/test.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		Bruker bruker = brukerDAO.hentBruker("Vebbis");
+		Resultat resultat = resultatDAO.hentResultat(1);
+		resultat.setEnere("fisk");
+		resultatDAO.oppdaterResultat(resultat);
+		response.sendRedirect("Test");
 	}
 
 }

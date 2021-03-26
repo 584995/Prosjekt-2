@@ -12,7 +12,7 @@
 	<form action="Gjenspilling" method="post">
 		<fieldset>
 			<div>
-				<label for="resultat">Velg et spill:</label>
+				<label for="resultatId">Velg et spill:</label>
 				<select id="resultatId" name="resultatId">
 					<option value="" selected>-----Velg_et_spill-----</option>
 					<c:forEach items="${resultater}" var="d">

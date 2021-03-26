@@ -35,7 +35,7 @@
 	<form action="Gjenspilling" method="post">
 		<button type="submit" >Gjenspilling</button>
 	</form>
-	<form action="Utlogging" method="post">
+	<form action="Utlogging" method="get">
 		<button type="submit" >Logg ut</button>
 	</form>
 </body>
