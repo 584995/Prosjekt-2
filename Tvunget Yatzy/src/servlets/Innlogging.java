@@ -71,7 +71,7 @@ public class Innlogging extends HttpServlet {
 		// Logger inn og henviser til hovedmeny-servlet.
 		if (logginn) {
 			Cookie innlogget = new Cookie("brukernavn", brukernavn);
-			innlogget.setMaxAge(60 * 60 * 24 * 7);
+			innlogget.setMaxAge(60*60);
 			response.addCookie(innlogget);
 			response.sendRedirect("Hovedmeny");
 		} 

@@ -111,7 +111,7 @@ public class Registrering extends HttpServlet {
 		try {
 			brukerDAO.lagreNyBruker(nyBruker);
 			Cookie innlogget = new Cookie("brukernavn", brukernavn);
-			innlogget.setMaxAge(60 * 60 * 24 * 7);
+			innlogget.setMaxAge(60*60);
 			response.addCookie(innlogget);
 		} catch (Throwable e) {
 			feil = true;
