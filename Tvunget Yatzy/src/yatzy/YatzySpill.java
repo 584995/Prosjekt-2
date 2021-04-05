@@ -1,6 +1,5 @@
 package yatzy;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import database.Bruker;
@@ -17,32 +16,22 @@ public class YatzySpill {
 		
 		String forrigeKast = forrigeKast(resultat, bruker);		
 		String terningkast = terningkast(forrigeKast, behold);
-		lagreKast(resultat, bruker, terningkast);
-		resultat.setTur((resultat.getTur() + 1) % (resultat.getSpillere().size() * 3));
+		resultat.lagreKast(terningkast);
+		resultat.nesteKast();
 		
-	}
-	
-	public int spillerPos (Resultat resultat, Bruker bruker) {
-		int i = 0;
-		for (Bruker b : resultat.getSpillere()) {
-			if (b.getBrukernavn().equals(bruker.getBrukernavn()))
-				return i;
-			i++;
-		}
-		return -1;		
 	}
 	
 	public String forrigeKast (Resultat resultat, Bruker bruker) {
 		List<String> tabell = resultat.lagListe();
-		int spillerPos = spillerPos(resultat, bruker);
+		int spillerPos = resultat.getSpiller_tur();
 		String forsteKast = null;
 		String andreKast = null;
 		for (String s : tabell) {
-			forsteKast = s.substring(spillerPos * 15, spillerPos * 15 + 5);
+			forsteKast = s.substring(2 + spillerPos * 17, 2 + spillerPos * 17 + 5);
 			if (forsteKast.equals("00000"))
 				return andreKast;
 			
-			andreKast = s.substring(spillerPos * 15 + 5, spillerPos * 15 + 10);
+			andreKast = s.substring(2 + spillerPos * 17 + 5, 2 + spillerPos * 17 + 10);
 			if (andreKast.equals("00000"))
 				return forsteKast;			
 		}
@@ -74,28 +63,6 @@ public class YatzySpill {
 		else
 			terningkast += forrigeKast.substring(4);
 		return terningkast;
-		
-	}
-	
-	public void lagreKast(Resultat resultat, Bruker bruker, String terningkast) {
-		List<String> tabell = resultat.lagListe();
-		int spillerPos = spillerPos(resultat, bruker);
-		for (int i = 0; i < tabell.size(); i++) {			
-			if (spillerPos == resultat.getSpillere().size() - 1) {
-				String helRunde = tabell.get(i).substring(spillerPos * 15, spillerPos * 15 + 15);
-				if (helRunde.contains("00000")) {
-					resultat.lagreKast(i, terningkast);
-					return;
-				}
-					
-			} else {
-				String helRunde = tabell.get(i).substring(spillerPos * 15);
-				if (helRunde.contains("00000")) {
-					resultat.lagreKast(i, terningkast);
-					return;
-				}				
-			}			
-		}
 		
 	}
 	

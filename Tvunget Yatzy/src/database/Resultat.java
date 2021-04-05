@@ -1,5 +1,6 @@
 package database;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +13,14 @@ import javax.persistence.Table;
 @Entity
 @Table(schema = "yatzy", name = "resultat")
 public class Resultat {
-	
+
 	@Id
 	@GeneratedValue
 	private int id;
 	private boolean startet;
-	private int tur;
+	private int spiller_tur;
+	private int kast_tur;
+	private int runde;
 	private String ferdig_dato;
 	private String enere;
 	private String toere;
@@ -40,7 +43,9 @@ public class Resultat {
 
 	public Resultat() {
 		startet = false;
-		tur = 0;
+		spiller_tur = 0;
+		kast_tur = 0;
+		runde = 1;
 		ferdig_dato = null;
 		enere = "";
 		toere = "";
@@ -61,21 +66,21 @@ public class Resultat {
 
 	public void leggTilKolonner(int antall) {
 		for (int i = 0; i < antall; i++) {
-			enere += "000000000000000";
-			toere += "000000000000000";
-			treere += "000000000000000";
-			firere += "000000000000000";
-			femmere += "000000000000000";
-			seksere += "000000000000000";
-			ett_par += "000000000000000";
-			to_par += "000000000000000";
-			tre_like += "000000000000000";
-			fire_like += "000000000000000";
-			liten_straight += "000000000000000";
-			stor_straight += "000000000000000";
-			hus += "000000000000000";
-			sjanse += "000000000000000";
-			yatzy += "000000000000000";
+			enere += "00000000000000000";
+			toere += "00000000000000000";
+			treere += "00000000000000000";
+			firere += "00000000000000000";
+			femmere += "00000000000000000";
+			seksere += "00000000000000000";
+			ett_par += "00000000000000000";
+			to_par += "00000000000000000";
+			tre_like += "00000000000000000";
+			fire_like += "00000000000000000";
+			liten_straight += "00000000000000000";
+			stor_straight += "00000000000000000";
+			hus += "00000000000000000";
+			sjanse += "00000000000000000";
+			yatzy += "00000000000000000";
 		}
 	}
 
@@ -95,26 +100,17 @@ public class Resultat {
 		stor_straight = fjernKolonnebit(stor_straight, pos);
 		hus = fjernKolonnebit(hus, pos);
 		sjanse = fjernKolonnebit(sjanse, pos);
-		yatzy =  fjernKolonnebit(yatzy, pos);
-		
+		yatzy = fjernKolonnebit(yatzy, pos);
+
 	}
 
-	private String fjernKolonnebit (String rad, int pos) {
-		if (pos*15 == rad.length())
-			return rad.substring(0, 0 + pos*15);
-		return rad.substring(0, 0 + pos*15) + rad.substring(15 + pos*15);
-	}
-	
-	public void leggTilSpillere (List<Bruker> spillere) {
-		for (Bruker e : spillere)
-			this.spillere.add(e);
-	}
-	
-	public void fjernSpiller (Bruker spiller) {
-		spillere.remove(spiller);
-	}
-	
-	public List<String> lagListe () {
+	private String fjernKolonnebit(String rad, int pos) {
+		if (pos * 17 == rad.length())
+			return rad.substring(0, 0 + pos * 17);
+		return rad.substring(0, 0 + pos * 17) + rad.substring(17 + pos * 17);
+	}	
+
+	public List<String> lagListe() {
 		List<String> liste = new ArrayList<String>();
 		liste.add(enere);
 		liste.add(toere);
@@ -133,42 +129,115 @@ public class Resultat {
 		liste.add(yatzy);
 		return liste;
 	}
-	
-	public void lagreKast(int rad, String kast) {
-		
-		if (rad == 0) 
-			enere = enere.substring(0, tur * 5) + kast + enere.substring(tur * 5 + 5);
-		else if (rad == 1) 
-			toere = toere.substring(0, tur * 5) + kast + toere.substring(tur * 5 + 5);
-		else if (rad == 2) 
-			treere = treere.substring(0, tur * 5) + kast + treere.substring(tur * 5 + 5);
-		else if (rad == 3) 
-			firere = firere.substring(0, tur * 5) + kast + firere.substring(tur * 5 + 5);
-		else if (rad == 4) 
-			femmere = femmere.substring(0, tur * 5) + kast + femmere.substring(tur * 5 + 5);
-		else if (rad == 5) 
-			seksere = seksere.substring(0, tur * 5) + kast + seksere.substring(tur * 5 + 5);
-		else if (rad == 6) 
-			ett_par = ett_par.substring(0, tur * 5) + kast + ett_par.substring(tur * 5 + 5);
-		else if (rad == 7) 
-			to_par = to_par.substring(0, tur * 5) + kast + to_par.substring(tur * 5 + 5);
-		else if (rad == 8) 
-			tre_like = tre_like.substring(0, tur * 5) + kast + tre_like.substring(tur * 5 + 5);
-		else if (rad == 9) 
-			fire_like = fire_like.substring(0, tur * 5) + kast + fire_like.substring(tur * 5 + 5);
-		else if (rad == 10) 
-			liten_straight = liten_straight.substring(0, tur * 5) + kast + liten_straight.substring(tur * 5 + 5);
-		else if (rad == 11) 
-			stor_straight = stor_straight.substring(0, tur * 5) + kast + stor_straight.substring(tur * 5 + 5);
-		else if (rad == 12) 
-			hus = hus.substring(0, tur * 5) + kast + hus.substring(tur * 5 + 5);
-		else if (rad == 13) 
-			sjanse = sjanse.substring(0, tur * 5) + kast + sjanse.substring(tur * 5 + 5);
-		else if (rad == 14) 
-			yatzy = yatzy.substring(0, tur * 5) + kast + yatzy.substring(tur * 5 + 5);
-		
+
+	public void leggTilSpillere(List<Bruker> spillere) {
+		for (Bruker e : spillere)
+			this.spillere.add(e);
+	}
+
+	public void fjernSpiller(Bruker spiller) {
+		int pos = spillerPos(spiller);
+		fjernKolonne(pos);
+		spillere.remove(spiller);
+		kast_tur = 0;
+		if (spiller_tur == spillere.size()) {
+			spiller_tur = 0;
+			runde++;
+			if (runde == 16) {
+				ferdig_dato = LocalDate.now().getDayOfMonth() + "." + LocalDate.now().getMonthValue() + "." + LocalDate.now().getYear();
+			}
+		}
 	}
 	
+	public int spillerPos (Bruker spiller) {
+		int i = 0;
+		for (Bruker b : spillere) {
+			if (b.getBrukernavn().equals(spiller.getBrukernavn()))
+				return i;
+			i++;
+		}
+		return -1;
+	}
+
+	public void lagreKast(String kast) {
+		int rad = 0;
+		for (String str : lagListe()) {			
+			if (spiller_tur != spillere.size() - 1) {
+				String helRunde = str.substring(spiller_tur * 17, spiller_tur * 17 + 17);
+				if (helRunde.contains("00000")) 
+					break;					
+			} else {
+				String helRunde = str.substring(spiller_tur * 17);
+				if (helRunde.contains("00000")) 
+					break;			
+			}
+			rad++;
+		}
+		
+		if (rad == 0)
+			enere = lagreHjelp(enere, kast);
+		else if (rad == 1)
+			toere = lagreHjelp(toere, kast);
+		else if (rad == 2)
+			treere = lagreHjelp(treere, kast);
+		else if (rad == 3)
+			firere = lagreHjelp(firere, kast);
+		else if (rad == 4)
+			femmere = lagreHjelp(femmere, kast);
+		else if (rad == 5)
+			seksere = lagreHjelp(seksere, kast);
+		else if (rad == 6)
+			ett_par = lagreHjelp(ett_par, kast);
+		else if (rad == 7)
+			to_par = lagreHjelp(to_par, kast);
+		else if (rad == 8)
+			tre_like = lagreHjelp(tre_like, kast);
+		else if (rad == 9)
+			fire_like = lagreHjelp(fire_like, kast);
+		else if (rad == 10)
+			liten_straight = lagreHjelp(liten_straight, kast);
+		else if (rad == 11)
+			stor_straight = lagreHjelp(stor_straight, kast);
+		else if (rad == 12)
+			hus = lagreHjelp(hus, kast);
+		else if (rad == 13)
+			sjanse = lagreHjelp(sjanse, kast);
+		else if (rad == 14)
+			yatzy = lagreHjelp(yatzy, kast);
+
+	}
+
+	private String lagreHjelp(String rad, String kast) {
+		if (kast_tur == 0) {
+			return rad.substring(0, (spiller_tur * 17) + (kast_tur * 5)) + String.format("%02d", runde) + kast
+					+ rad.substring(7 + (spiller_tur * 17) + (kast_tur * 5));
+		} else {
+			return rad.substring(0, 2 + (spiller_tur * 17) + (kast_tur * 5)) + kast
+					+ rad.substring(7 + (spiller_tur * 17) + (kast_tur * 5));
+		}	
+	}
+	
+	public void nesteKast() {
+		kast_tur++;
+		if (kast_tur == 3)
+			nesteSpiller();
+	}
+	
+	public void nesteSpiller() {
+		spiller_tur++;
+		kast_tur = 0;
+		if (spiller_tur == spillere.size())
+			nesteRunde();
+	}
+	
+	public void nesteRunde() {
+		runde++;
+		spiller_tur = 0;
+		if (runde == 16) {
+			ferdig_dato = LocalDate.now().getDayOfMonth() + "." + LocalDate.now().getMonthValue() + "." + LocalDate.now().getYear();
+		}
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -176,25 +245,21 @@ public class Resultat {
 	public boolean isStartet() {
 		return startet;
 	}
-
-	public void setStartet(boolean ferdig) {
-		this.startet = ferdig;
+	
+	public int getSpiller_tur() {
+		return spiller_tur;
 	}
 
-	public int getTur() {
-		return tur;
+	public int getKast_tur() {
+		return kast_tur;
 	}
 
-	public void setTur(int tur) {
-		this.tur = tur;
+	public int getRunde() {
+		return runde;
 	}
 
 	public String getFerdig_dato() {
 		return ferdig_dato;
-	}
-
-	public void setFerdig_dato(String ferdig_dato) {
-		this.ferdig_dato = ferdig_dato;
 	}
 
 	public String getEnere() {
@@ -324,6 +389,5 @@ public class Resultat {
 	public void setSpillere(List<Bruker> spillere) {
 		this.spillere = spillere;
 	}
-
 
 }

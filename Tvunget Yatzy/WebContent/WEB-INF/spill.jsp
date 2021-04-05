@@ -12,7 +12,7 @@
 		<c:when test="${sinTur}">
 			<form action="Spill" method="post">
 				<c:choose>
-					<c:when test="${kastenummer == 0}">
+					<c:when test="${kastetur == 0}">
 						<p>Første kast. Trill i vei.</p>
 					</c:when>
 					<c:otherwise>

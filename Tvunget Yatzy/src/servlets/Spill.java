@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,12 +52,12 @@ public class Spill extends HttpServlet {
 			YatzySpill yatzy = new YatzySpill();
 			Bruker spiller = brukerDAO.hentBruker(loggetinn.getValue());
 			Resultat resultat = resultatDAO.hentResultat(spiller.aktivtSpill().getId());
-			boolean sinTur = yatzy.spillerPos(resultat, spiller) == (resultat.getTur() / 3);
+			boolean sinTur = resultat.spillerPos(spiller) == resultat.getSpiller_tur();
 			request.getSession().setAttribute("sinTur", sinTur);
 			if (sinTur) {
-				int kastenummer = resultat.getTur() % 3;
-				request.getSession().setAttribute("kastenummer", kastenummer);
-				if (kastenummer > 0) {
+				int kastetur = resultat.getKast_tur();
+				request.getSession().setAttribute("kastetur", kastetur);
+				if (kastetur > 0) {
 					String forrigeKast = yatzy.forrigeKast(resultat, spiller);
 					request.getSession().setAttribute("terning1", forrigeKast.substring(0,1));
 					request.getSession().setAttribute("terning2", forrigeKast.substring(1,2));
@@ -77,33 +75,6 @@ public class Spill extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String terning1 = request.getParameter("terning1");
-		String terning2 = request.getParameter("terning2");
-		String terning3 = request.getParameter("terning3");
-		String terning4 = request.getParameter("terning4");
-		String terning5 = request.getParameter("terning5");
-		
-		List<Boolean> behold = new ArrayList<Boolean>();
-		if (terning1 != null)
-			behold.add(true);
-		else
-			behold.add(false);
-		if (terning2 != null)
-			behold.add(true);
-		else
-			behold.add(false);
-		if (terning3 != null)
-			behold.add(true);
-		else
-			behold.add(false);
-		if (terning4 != null)
-			behold.add(true);
-		else
-			behold.add(false);
-		if (terning5 != null)
-			behold.add(true);
-		else
-			behold.add(false);
 		
 		String brukernavn = null;
 		try {
@@ -111,13 +82,48 @@ public class Spill extends HttpServlet {
 					.findAny().get().getValue();
 		} catch (Throwable e) {
 		}
-		
-		YatzySpill yatzy = new YatzySpill();
 		Bruker spiller = brukerDAO.hentBruker(brukernavn);
 		Resultat resultat = resultatDAO.hentResultat(spiller.aktivtSpill().getId());
-		yatzy.spillTur(resultat, spiller, behold);
-		resultatDAO.oppdaterResultat(resultat);
-		response.sendRedirect("Spill");
+		int spillerPos = resultat.spillerPos(spiller);
+		
+		if (resultat.getSpiller_tur() == spillerPos) {
+			String terning1 = request.getParameter("terning1");
+			String terning2 = request.getParameter("terning2");
+			String terning3 = request.getParameter("terning3");
+			String terning4 = request.getParameter("terning4");
+			String terning5 = request.getParameter("terning5");
+			
+			List<Boolean> behold = new ArrayList<Boolean>();
+			if (terning1 != null)
+				behold.add(true);
+			else
+				behold.add(false);
+			if (terning2 != null)
+				behold.add(true);
+			else
+				behold.add(false);
+			if (terning3 != null)
+				behold.add(true);
+			else
+				behold.add(false);
+			if (terning4 != null)
+				behold.add(true);
+			else
+				behold.add(false);
+			if (terning5 != null)
+				behold.add(true);
+			else
+				behold.add(false);
+		
+			YatzySpill yatzy = new YatzySpill();			
+			yatzy.spillTur(resultat, spiller, behold);
+			resultatDAO.oppdaterResultat(resultat);
+		}
+		
+		if (resultat.getFerdig_dato() == null)
+			response.sendRedirect("Spill");
+		else
+			request.getRequestDispatcher("WEB-INF/ferdigSpill.jsp").forward(request, response);
 		
 	}
 

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.BrukerDAO;
 import database.Resultat;
+import database.ResultatDAO;
 
 /**
  * Servlet implementation class Gjenspilling
@@ -25,6 +26,8 @@ public class Gjenspilling extends HttpServlet {
 
 	@EJB
 	private BrukerDAO brukerDAO;
+	@EJB
+	private ResultatDAO resultatDAO;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -59,7 +62,7 @@ public class Gjenspilling extends HttpServlet {
 					
 			// Henviser til gjenspilling-side med relevant resultat.
 			else {
-			Resultat resultat = brukerDAO.hentBruker(loggetinn.getValue()).getResultatById(resId);
+			Resultat resultat = resultatDAO.hentResultat(resId);
 			List<String> resultatListe = resultat.lagListe();
 			request.getSession().setAttribute("resultatListe", resultatListe);
 			request.getRequestDispatcher("WEB-INF/gjenspilling.jsp").forward(request, response);

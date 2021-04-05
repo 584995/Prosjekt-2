@@ -43,14 +43,6 @@ public class Bruker {
 	public void fjernResultat (Resultat resultat) {
 		resultater.remove(resultat);
 	}
-
-	public Resultat getResultatById (int id) {
-		for (Resultat e : resultater) {
-			if (e.getId() == id)
-				return e;
-		}
-		return null;
-	}
 	
 	public boolean erISpill () {
 		for (Resultat e : resultater)
@@ -61,7 +53,7 @@ public class Bruker {
 	
 	public Resultat aktivtSpill () {
 		for (Resultat r : resultater)
-			if (r.getFerdig_dato() != null)
+			if (r.getFerdig_dato() == null)
 				return r;
 		return null;
 	}
