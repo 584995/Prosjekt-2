@@ -2,10 +2,10 @@ package test;
 
 public class Validator {
 	
-	//godtar alle bokstaver, bindestrek og mellomrom, skal ha lengde på 2-20
+	//godtar alle bokstaver, tall, bindestrek og mellomrom, skal ha lengde på 2-20
 	public boolean brukernavnSjekk(String s) {
 		
-		return s != null && s.matches("^[-a-zA-ZæøåÆØÅ_ ]{2,20}$");
+		return s != null && s.matches("^[-a-zA-ZæøåÆØÅ_0-9 ]{2,20}$");
 	}
 	
 	//godtar bare siffer, skal ha lengde på 8

@@ -18,7 +18,7 @@ public class ValidatorTester {
 	
 	@Test
 	public void brukernavnTrue() {
-		assertTrue(validator.brukernavnSjekk("Øystein "));
+		assertTrue(validator.brukernavnSjekk("Øystein2 "));
 	}
 	
 	@Test
