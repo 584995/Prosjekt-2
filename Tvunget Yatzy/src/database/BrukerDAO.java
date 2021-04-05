@@ -27,4 +27,8 @@ public class BrukerDAO {
 	public Bruker hentBruker(String brukernavn) {
 		return em.find(Bruker.class, brukernavn);
 	}
+	
+	public void setEntityManager(EntityManager entityManager) {
+		this.em = entityManager;
+	}
 }
