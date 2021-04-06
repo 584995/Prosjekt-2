@@ -21,7 +21,7 @@ import yatzy.YatzySpill;
 @WebServlet("/Spill")
 public class Spill extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
+
 	@EJB
 	private BrukerDAO brukerDAO;
 	@EJB
@@ -37,15 +37,15 @@ public class Spill extends HttpServlet {
 					.findAny().get();
 		} catch (Throwable e) {
 		}
-		
+
 		// Henviser til innlogging-servlet.
 		if (loggetinn == null)
 			response.sendRedirect("Innlogging");
-		
+
 		// Henviser til hovedmeny-servlet.
 		else if (!brukerDAO.hentBruker(loggetinn.getValue()).erISpill())
 			response.sendRedirect("Hovedmeny");
-					
+
 		// Henviser til spill-side.
 		else {
 			request.getSession().invalidate();
@@ -59,23 +59,21 @@ public class Spill extends HttpServlet {
 				request.getSession().setAttribute("kastetur", kastetur);
 				if (kastetur > 0) {
 					String forrigeKast = yatzy.forrigeKast(resultat, spiller);
-					request.getSession().setAttribute("terning1", forrigeKast.substring(0,1));
-					request.getSession().setAttribute("terning2", forrigeKast.substring(1,2));
-					request.getSession().setAttribute("terning3", forrigeKast.substring(2,3));
-					request.getSession().setAttribute("terning4", forrigeKast.substring(3,4));
+					request.getSession().setAttribute("terning1", forrigeKast.substring(0, 1));
+					request.getSession().setAttribute("terning2", forrigeKast.substring(1, 2));
+					request.getSession().setAttribute("terning3", forrigeKast.substring(2, 3));
+					request.getSession().setAttribute("terning4", forrigeKast.substring(3, 4));
 					request.getSession().setAttribute("terning5", forrigeKast.substring(4));
 				}
-			}		
+			}
+			request.getSession().setAttribute("poengTabell", resultat.poengTabell());
 			request.getRequestDispatcher("WEB-INF/spill.jsp").forward(request, response);
-			
 		}
-				
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String brukernavn = null;
 		try {
 			brukernavn = Arrays.stream(request.getCookies()).filter(c -> c.getName().equalsIgnoreCase("brukernavn"))
@@ -85,14 +83,14 @@ public class Spill extends HttpServlet {
 		Bruker spiller = brukerDAO.hentBruker(brukernavn);
 		Resultat resultat = resultatDAO.hentResultat(spiller.aktivtSpill().getId());
 		int spillerPos = resultat.spillerPos(spiller);
-		
+
 		if (resultat.getSpiller_tur() == spillerPos) {
 			String terning1 = request.getParameter("terning1");
 			String terning2 = request.getParameter("terning2");
 			String terning3 = request.getParameter("terning3");
 			String terning4 = request.getParameter("terning4");
 			String terning5 = request.getParameter("terning5");
-			
+
 			List<Boolean> behold = new ArrayList<Boolean>();
 			if (terning1 != null)
 				behold.add(true);
@@ -114,17 +112,17 @@ public class Spill extends HttpServlet {
 				behold.add(true);
 			else
 				behold.add(false);
-		
-			YatzySpill yatzy = new YatzySpill();			
+
+			YatzySpill yatzy = new YatzySpill();
 			yatzy.spillTur(resultat, spiller, behold);
 			resultatDAO.oppdaterResultat(resultat);
 		}
-		
+
 		if (resultat.getFerdig_dato() == null)
 			response.sendRedirect("Spill");
 		else
 			request.getRequestDispatcher("WEB-INF/ferdigSpill.jsp").forward(request, response);
-		
+
 	}
 
 }

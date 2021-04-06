@@ -3,6 +3,7 @@ package database;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -237,8 +238,460 @@ public class Resultat {
 			ferdig_dato = LocalDate.now().getDayOfMonth() + "." + LocalDate.now().getMonthValue() + "." + LocalDate.now().getYear();
 		}
 	}
+	
+	public List<List<String>> poengTabell() {
+		List<List<String>> poengTabell = new ArrayList<List<String>>();
+		List<String> poengKolonne = new ArrayList<String>();
+		poengKolonne.add("Deltagere");
+		poengKolonne.add("Enere");
+		poengKolonne.add("Toere");
+		poengKolonne.add("Treere");
+		poengKolonne.add("Firere");
+		poengKolonne.add("Femmere");
+		poengKolonne.add("Seksere");
+		poengKolonne.add("Sum");
+		poengKolonne.add("Bonus");
+		poengKolonne.add("Ett Par");
+		poengKolonne.add("To Par");
+		poengKolonne.add("Tre Like");
+		poengKolonne.add("Fire Like");
+		poengKolonne.add("Liten Straight");
+		poengKolonne.add("Stor Straight");
+		poengKolonne.add("Hus");
+		poengKolonne.add("Sjanse");
+		poengKolonne.add("Yatzy");
+		poengKolonne.add("Totalt");
+		poengTabell.add(poengKolonne);
+		for (Bruker spiller : spillere) {
+			poengKolonne = new ArrayList<String>();
+			poengKolonne.add(spiller.getBrukernavn());
+			int spillerPos = spillerPos(spiller);
+			for (int poeng : regnEnereTilSeksere(spillerPos)) {
+				if (poeng == -1)
+					poengKolonne.add("");
+				else
+					poengKolonne.add("" + poeng);
+			}
+			poengKolonne.add("" + regnSum(spillerPos));
+			poengKolonne.add("" + regnBonus(spillerPos));
+			for (int poeng : regnEttParTilYatzy(spillerPos)) {
+				if (poeng == -1)
+					poengKolonne.add("");
+				else
+					poengKolonne.add("" + poeng);
+			}
+			poengKolonne.add("" + regnTotalt(spillerPos));
+			poengTabell.add(poengKolonne);
+		}
+		return poengTabell;
+	}
+	
+	private List<Integer> regnEnereTilSeksere (int spillerPos) {
+		List<Integer> regnetEnereTilSeksere = new ArrayList<Integer>();
+		regnetEnereTilSeksere.add(regnEnere(spillerPos));
+		regnetEnereTilSeksere.add(regnToere(spillerPos));
+		regnetEnereTilSeksere.add(regnTreere(spillerPos));
+		regnetEnereTilSeksere.add(regnFirere(spillerPos));
+		regnetEnereTilSeksere.add(regnFemmere(spillerPos));
+		regnetEnereTilSeksere.add(regnSeksere(spillerPos));
+		return regnetEnereTilSeksere;
+	}
+	
+	private int regnEnere (int spillerPos) {
+		int poeng = 0;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = enere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = enere.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		for (int i = 0; i < 4; i++)
+			if (sisteKast.substring(i, i+1).contains("1"))
+				poeng += 1;
+		if (sisteKast.substring(4).contains("1"))
+			poeng += 1;
+		return poeng;
+	}
+	
+	private int regnToere (int spillerPos) {
+		int poeng = 0;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = toere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = toere.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		for (int i = 0; i < 4; i++)
+			if (sisteKast.substring(i, i+1).contains("2"))
+				poeng += 2;
+		if (sisteKast.substring(4).contains("2"))
+			poeng += 2;
+		return poeng;
+	}
+	
+	private int regnTreere (int spillerPos) {
+		int poeng = 0;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = treere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = treere.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		for (int i = 0; i < 4; i++)
+			if (sisteKast.substring(i, i+1).contains("3"))
+				poeng += 3;
+		if (sisteKast.substring(4).contains("3"))
+			poeng += 3;
+		return poeng;
+	}
+	
+	private int regnFirere (int spillerPos) {
+		int poeng = 0;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = firere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = firere.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		for (int i = 0; i < 4; i++)
+			if (sisteKast.substring(i, i+1).contains("4"))
+				poeng += 4;
+		if (sisteKast.substring(4).contains("4"))
+			poeng += 4;
+		return poeng;
+	}
+	
+	private int regnFemmere (int spillerPos) {
+		int poeng = 0;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = femmere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = femmere.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		for (int i = 0; i < 4; i++)
+			if (sisteKast.substring(i, i+1).contains("5"))
+				poeng += 5;
+		if (sisteKast.substring(4).contains("5"))
+			poeng += 5;
+		return poeng;
+	}
+	
+	private int regnSeksere (int spillerPos) {
+		int poeng = 0;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = enere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = enere.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		for (int i = 0; i < 4; i++)
+			if (sisteKast.substring(i, i+1).contains("6"))
+				poeng += 6;
+		if (sisteKast.substring(4).contains("6"))
+			poeng += 6;
+		return poeng;
+	}
+	
+	private int regnSum (int spillerPos) {
+		int sum = 0;
+		for (int poeng : regnEnereTilSeksere(spillerPos))
+			sum += poeng;
+		return sum;
+	}
+	
+	private int regnBonus (int spillerPos) {
+		int sum = regnSum(spillerPos);
+		if (sum >= 63)
+			return 50;
+		return 0;
+	}
+	
+	private List<Integer> regnEttParTilYatzy (int spillerPos) {
+		List<Integer> regnetEttParTilYatzy = new ArrayList<Integer>();
+		regnetEttParTilYatzy.add(regnEttPar(spillerPos));
+		regnetEttParTilYatzy.add(regnToPar(spillerPos));
+		regnetEttParTilYatzy.add(regnTreLike(spillerPos));
+		regnetEttParTilYatzy.add(regnFireLike(spillerPos));
+		regnetEttParTilYatzy.add(regnLitenStraight(spillerPos));
+		regnetEttParTilYatzy.add(regnStorStraight(spillerPos));
+		regnetEttParTilYatzy.add(regnHus(spillerPos));
+		regnetEttParTilYatzy.add(regnSjanse(spillerPos));
+		regnetEttParTilYatzy.add(regnYatzy(spillerPos));
+		return regnetEttParTilYatzy;
+	}
+	
+	private int regnEttPar (int spillerPos) {
+		int poeng = 0;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = ett_par.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = ett_par.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		List<String> liste = new ArrayList<String>();
+		for (int i = 0; i < 4; i++)
+			liste.add(sisteKast.substring(i, i+1));
+		liste.add(sisteKast.substring(4));
+		int i = 6;
+		while (i > 0) {
+			final int j = i;
+			List<String> testeListe = liste.stream()
+			.filter(a -> a.contains("" + j))
+			.collect(Collectors.toList());
+			if (testeListe.size() > 1) {
+				poeng += i * 2;
+				break;
+			}
+			i--;
+		}
+		return poeng;
+	}
+	
+	private int regnToPar (int spillerPos) {
+		int poeng = 0;
+		boolean toParSjekk = false;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = to_par.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = to_par.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		List<String> liste = new ArrayList<String>();
+		for (int i = 0; i < 4; i++)
+			liste.add(sisteKast.substring(i, i+1));
+		liste.add(sisteKast.substring(4));
+		int i = 6;
+		while (i > 0) {
+			final int j = i;
+			List<String> testeListe = liste.stream()
+			.filter(a -> a.contains("" + j))
+			.collect(Collectors.toList());
+			if (testeListe.size() > 1) {
+				poeng += i * 2;
+				i--;
+				break;
+			}
+			i--;
+		}
+		while (i > 0) {
+			final int j = i;
+			List<String> testeListe = liste.stream()
+			.filter(a -> a.contains("" + j))
+			.collect(Collectors.toList());
+			if (testeListe.size() > 1) {
+				poeng += i * 2;
+				toParSjekk = true;
+				break;
+			}
+			i--;
+		}
+		if (toParSjekk)
+			return poeng;
+		return 0;
+	}
+	
+	private int regnTreLike (int spillerPos) {
+		int poeng = 0;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = tre_like.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = tre_like.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		List<String> liste = new ArrayList<String>();
+		for (int i = 0; i < 4; i++)
+			liste.add(sisteKast.substring(i, i+1));
+		liste.add(sisteKast.substring(4));
+		int i = 6;
+		while (i > 0) {
+			final int j = i;
+			List<String> testeListe = liste.stream()
+			.filter(a -> a.contains("" + j))
+			.collect(Collectors.toList());
+			if (testeListe.size() > 2) {
+				poeng += i * 3;
+				break;
+			}
+			i--;
+		}
+		return poeng;
+	}
+	
+	private int regnFireLike (int spillerPos) {
+		int poeng = 0;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = fire_like.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = fire_like.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		List<String> liste = new ArrayList<String>();
+		for (int i = 0; i < 4; i++)
+			liste.add(sisteKast.substring(i, i+1));
+		liste.add(sisteKast.substring(4));
+		int i = 6;
+		while (i > 0) {
+			final int j = i;
+			List<String> testeListe = liste.stream()
+			.filter(a -> a.contains("" + j))
+			.collect(Collectors.toList());
+			if (testeListe.size() > 3) {
+				poeng += i * 4;
+				break;
+			}
+			i--;
+		}
+		return poeng;
+	}
+	
+	private int regnLitenStraight (int spillerPos) {
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = liten_straight.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = liten_straight.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		if (sisteKast.contains("1"))
+			if (sisteKast.contains("2"))
+				if (sisteKast.contains("3"))
+					if (sisteKast.contains("4"))
+						if (sisteKast.contains("5"))
+							return 15;
+		return 0;
+	}
+	
+	private int regnStorStraight (int spillerPos) {
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = stor_straight.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = stor_straight.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		if (sisteKast.contains("2"))
+			if (sisteKast.contains("3"))
+				if (sisteKast.contains("4"))
+					if (sisteKast.contains("5"))
+						if (sisteKast.contains("6"))
+							return 20;
+		return 0;
+	}
+	
+	private int regnHus (int spillerPos) {
+		int poeng = 0;
+		boolean husSjekk = false;
+		int hjelpetall = 0;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = hus.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = hus.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		List<String> liste = new ArrayList<String>();
+		for (int i = 0; i < 4; i++)
+			liste.add(sisteKast.substring(i, i+1));
+		liste.add(sisteKast.substring(4));
+		int i = 6;
+		while (i > 0) {
+			final int j = i;
+			List<String> testeListe = liste.stream()
+			.filter(a -> a.contains("" + j))
+			.collect(Collectors.toList());
+			if (testeListe.size() > 2) {
+				poeng += i * 3;
+				hjelpetall = 2;
+				i--;
+				break;
+			} else if (testeListe.size() > 1) {
+				poeng += i * 2;
+				hjelpetall = 3;
+				i--;
+				break;
+			}
+			i--;
+		}
+		while (i > 0) {
+			final int j = i;
+			List<String> testeListe = liste.stream()
+			.filter(a -> a.contains("" + j))
+			.collect(Collectors.toList());
+			if (testeListe.size() > hjelpetall) {
+				poeng += i * hjelpetall;
+				husSjekk = true;
+				break;
+			}
+			i--;
+		}
+		if (husSjekk)
+			return poeng;
+		return 0;
+	}
+	
+	private int regnSjanse (int spillerPos) {
+		int poeng = 0;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = sjanse.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = sjanse.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		for (int i = 0; i < 4; i++)
+			poeng += Integer.parseInt(sisteKast.substring(i, i+1));
+		poeng += Integer.parseInt(sisteKast.substring(4));
+		return poeng;
+	}
+	
+	private int regnYatzy (int spillerPos) {
+		boolean yatzySjekk = false;
+		String sisteKast = "";
+		if (spillerPos != spillere.size())
+			sisteKast = yatzy.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+		else
+			sisteKast = yatzy.substring(12 + 17 * spillerPos);
+		if (sisteKast.equals("00000"))
+			return -1;
+		List<String> liste = new ArrayList<String>();
+		for (int i = 0; i < 4; i++)
+			liste.add(sisteKast.substring(i, i+1));
+		liste.add(sisteKast.substring(4));
+		int i = 6;
+		while (i > 0) {
+			final int j = i;
+			List<String> testeListe = liste.stream()
+			.filter(a -> a.contains("" + j))
+			.collect(Collectors.toList());
+			if (testeListe.size() > 4) {
+				yatzySjekk = true;
+				break;
+			}
+			i--;
+		}
+		if (yatzySjekk)
+			return 50;
+		return 0;
+	}
+	
+	private int regnTotalt (int spillerPos) {
+		return regnEnere(spillerPos) + regnToere(spillerPos) + regnTreere(spillerPos) + regnFirere(spillerPos) + regnFemmere(spillerPos) + 
+				regnSeksere(spillerPos) + regnEttPar(spillerPos) + regnToPar(spillerPos) + regnTreLike(spillerPos) + regnFireLike(spillerPos) + 
+				regnLitenStraight(spillerPos) + regnStorStraight(spillerPos) + regnHus(spillerPos) + regnSjanse(spillerPos) + regnYatzy(spillerPos);
+	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 

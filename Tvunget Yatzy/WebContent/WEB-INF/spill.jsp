@@ -6,8 +6,27 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Yatzy</title>
+<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+	<table>
+		<c:forEach items="${poengTabell}" var="p">
+			<tr>
+				<c:choose>
+					<c:when test="${p[0].equals(poengTabell[0][0])}">
+						<c:forEach items="${p}" var="t">
+							<th>${t}</th>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach items="${p}" var="t">
+							<td>${t}</td>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</tr>
+		</c:forEach>
+	</table>
 	<c:choose>
 		<c:when test="${sinTur}">
 			<form action="Spill" method="post">
