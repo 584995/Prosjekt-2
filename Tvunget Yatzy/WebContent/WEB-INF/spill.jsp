@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+	<div><p>Logget inn som: ${brukernavn}</p></div>	
 	<div id="main-wrapper">
 		<c:choose>
 			<c:when test="${startet}">
@@ -58,8 +59,8 @@
 						<c:otherwise>
 							<h2>Vent på din tur.</h2>
 							<%
-	    						// Set refresh, autoload time as 1 seconds
-	    						response.setIntHeader("Refresh", 1);
+	    						// Set refresh, autoload time as 3 seconds
+	    						response.setIntHeader("Refresh", 3);
 	   	 					%>
 						</c:otherwise>
 					</c:choose>

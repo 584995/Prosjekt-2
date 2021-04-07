@@ -55,6 +55,7 @@ public class Spill extends HttpServlet {
 			if (resultat.getFerdig_dato() == null) {
 				boolean sinTur = resultat.spillerPos(spiller) == resultat.getSpiller_tur();
 				request.getSession().setAttribute("sinTur", sinTur);
+				request.getSession().setAttribute("brukernavn", spiller.getBrukernavn());
 				if (sinTur) {
 					int kastetur = resultat.getKast_tur();
 					request.getSession().setAttribute("kastetur", kastetur);
