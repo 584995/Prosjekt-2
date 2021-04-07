@@ -45,6 +45,10 @@ public class Bruker {
 	}
 	
 	public boolean erISpill () {
+		if(resultater.size() == 0) {
+			return false;
+		}
+		
 		for (Resultat e : resultater)
 			if (e.getFerdig_dato() == null)
 				return true;
