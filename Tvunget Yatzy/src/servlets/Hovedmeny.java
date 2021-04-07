@@ -29,10 +29,10 @@ public class Hovedmeny extends HttpServlet {
 	private BrukerDAO brukerDAO;
 	@EJB
 	private ResultatDAO resultatDAO;
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		// Sjekker om innlogget.
 		Cookie loggetinn = null;
 		try {
@@ -40,29 +40,63 @@ public class Hovedmeny extends HttpServlet {
 					.findAny().get();
 		} catch (Throwable e) {
 		}
-		
+
 		// Henviser til innlogging-servlet.
 		if (loggetinn == null)
 			response.sendRedirect("Innlogging");
-		
+
 		// Henviser til hovedmeny-side.
 		else {
-			
+
 			Bruker bruker = brukerDAO.hentBruker(loggetinn.getValue());
-			boolean erISpill = bruker.erISpill();
-			request.getSession().setAttribute("erISpill", erISpill);
-			List<Resultat> resultater = resultatDAO.hentAlleResultat().stream()
-					.filter(a -> !a.isStartet()).collect(Collectors.toList());
-			request.getSession().setAttribute("resultater", resultater);		
-			
-			request.getRequestDispatcher("WEB-INF/hovedmeny.jsp").forward(request, response);
-			
-		}
+			if (bruker == null)
+				response.sendRedirect("Utlogging");
+			else {
+				boolean erISpill = false;
+				if (bruker.erISpill()) {
+					Resultat resultat = resultatDAO.hentResultat(bruker.aktivtSpill().getId());
+					if (resultat.getFerdig_dato() == null)
+						erISpill = true;
+				}
 				
+				request.getSession().setAttribute("erISpill", erISpill);
+				List<Resultat> resultater = resultatDAO.hentAlleResultat().stream().filter(a -> !a.isStartet())
+						.collect(Collectors.toList());
+				request.getSession().setAttribute("resultater", resultater);
+
+				request.getRequestDispatcher("WEB-INF/hovedmeny.jsp").forward(request, response);
+			}
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		String brukernavn = null;
+		try {
+			brukernavn = Arrays.stream(request.getCookies()).filter(c -> c.getName().equalsIgnoreCase("brukernavn"))
+					.findAny().get().getValue();
+		} catch (Throwable e) {
+		}
+		Bruker bruker = brukerDAO.hentBruker(brukernavn);
+
+		boolean erISpill = false;
+		if (bruker.erISpill()) {
+			Resultat resultat = resultatDAO.hentResultat(bruker.aktivtSpill().getId());
+			if (resultat.getFerdig_dato() == null)
+				erISpill = true;
+		}
+		if (erISpill)
+			response.sendRedirect("Hovedmeny");
+		else {
+			String resId = request.getParameter("resultatId");
+			Resultat resultat = resultatDAO.hentResultat(Integer.parseInt(resId));
+			bruker.leggTilResultat(resultat);
+			brukerDAO.oppdaterBruker(bruker);
+			resultat.leggTilSpiller(bruker);
+			resultatDAO.oppdaterResultat(resultat);
+			response.sendRedirect("Hovedmeny");
+		}
 
 	}
 

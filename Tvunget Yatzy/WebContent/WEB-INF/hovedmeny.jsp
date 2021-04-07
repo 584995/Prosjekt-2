@@ -27,14 +27,17 @@
 		<div id="spillmeny">
 			<c:choose>
 				<c:when test="${erISpill}">
-					<form action="Spill" method="get">
-						<button type="submit" class="knapper">Fortsett spill</button>
-					</form>
+					<fieldset>
+						<legend>Aktivt spill</legend>
+						<form action="Spill" method="get">
+							<button type="submit" class="knapper">Fortsett spill</button>
+						</form>
+					</fieldset>
 				</c:when>
 				<c:otherwise>
 					<fieldset>
 						<legend>Aktive spill</legend>
-						<form>
+						<form action="Hovedmeny" method="post">
 							<select id="resultatId" name="resultatId">
 								<option value="" selected>-----Velg_et_spill-----</option>
 								<c:forEach items="${resultater}" var="r">
@@ -46,21 +49,24 @@
 					</fieldset>
 					<fieldset>
 						<legend>Start nytt spill</legend>
-						<form action="Spill" method="get">
+						<form action="Nyttspill" method="post">
 							<button type="submit" class="knapper">Nytt spill</button>
-						</form>
-					</fieldset>
-					<fieldset>
-						<legend>Reprise av ferdige spill</legend>
-						<form action="Gjenspilling" method="post">
-							<button type="submit" class="knapper">Gjenspilling</button>
 						</form>
 					</fieldset>
 				</c:otherwise>
 			</c:choose>
-			<form action="Utlogging" method="get" style="margin-left:1px;">
-				<button type="submit" class="knapper">Logg ut</button>
-			</form>
+			<fieldset>
+				<legend>Reprise av ferdige spill</legend>
+				<form action="Gjenspilling" method="post">
+					<button type="submit" class="knapper">Gjenspilling</button>
+				</form>
+			</fieldset>
+			<fieldset>
+				<legend>Utlogging</legend>
+				<form action="Utlogging" method="get" style="margin-left:1px;">
+					<button type="submit" class="knapper">Logg ut</button>
+				</form>
+			</fieldset>
 		</div>
 	</div>
 </body>

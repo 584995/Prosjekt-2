@@ -52,22 +52,28 @@ public class Spill extends HttpServlet {
 			YatzySpill yatzy = new YatzySpill();
 			Bruker spiller = brukerDAO.hentBruker(loggetinn.getValue());
 			Resultat resultat = resultatDAO.hentResultat(spiller.aktivtSpill().getId());
-			boolean sinTur = resultat.spillerPos(spiller) == resultat.getSpiller_tur();
-			request.getSession().setAttribute("sinTur", sinTur);
-			if (sinTur) {
-				int kastetur = resultat.getKast_tur();
-				request.getSession().setAttribute("kastetur", kastetur);
-				if (kastetur > 0) {
-					String forrigeKast = yatzy.forrigeKast(resultat, spiller);
-					request.getSession().setAttribute("terning1", forrigeKast.substring(0, 1));
-					request.getSession().setAttribute("terning2", forrigeKast.substring(1, 2));
-					request.getSession().setAttribute("terning3", forrigeKast.substring(2, 3));
-					request.getSession().setAttribute("terning4", forrigeKast.substring(3, 4));
-					request.getSession().setAttribute("terning5", forrigeKast.substring(4));
+			if (resultat.getFerdig_dato() == null) {
+				boolean sinTur = resultat.spillerPos(spiller) == resultat.getSpiller_tur();
+				request.getSession().setAttribute("sinTur", sinTur);
+				if (sinTur) {
+					int kastetur = resultat.getKast_tur();
+					request.getSession().setAttribute("kastetur", kastetur);
+					if (kastetur > 0) {
+						String forrigeKast = yatzy.forrigeKast(resultat, spiller);
+						request.getSession().setAttribute("terning1", forrigeKast.substring(0, 1));
+						request.getSession().setAttribute("terning2", forrigeKast.substring(1, 2));
+						request.getSession().setAttribute("terning3", forrigeKast.substring(2, 3));
+						request.getSession().setAttribute("terning4", forrigeKast.substring(3, 4));
+						request.getSession().setAttribute("terning5", forrigeKast.substring(4));
+					}
 				}
+				request.getSession().setAttribute("spillere", resultat.getSpillere());
+				request.getSession().setAttribute("startet", resultat.isStartet());
+				request.getSession().setAttribute("poengTabell", resultat.poengTabell());
+				request.getRequestDispatcher("WEB-INF/spill.jsp").forward(request, response);
+			} else {
+				request.getRequestDispatcher("WEB-INF/ferdigSpill.jsp").forward(request, response);
 			}
-			request.getSession().setAttribute("poengTabell", resultat.poengTabell());
-			request.getRequestDispatcher("WEB-INF/spill.jsp").forward(request, response);
 		}
 	}
 
@@ -120,8 +126,9 @@ public class Spill extends HttpServlet {
 
 		if (resultat.getFerdig_dato() == null)
 			response.sendRedirect("Spill");
-		else
+		else {
 			request.getRequestDispatcher("WEB-INF/ferdigSpill.jsp").forward(request, response);
+		}		
 
 	}
 

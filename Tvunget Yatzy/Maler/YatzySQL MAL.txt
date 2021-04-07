@@ -15,7 +15,9 @@ CREATE TABLE bruker
 
 INSERT INTO bruker VALUES 
 	('Vebbis', 'qwerqwer', '90415969', 'vebjoern.vaardal@gmail.com', 0),
-	('Vebbis98', 'abcdefgh', '90415969', 'vebjoern.vaardal@gmail.com', 0);
+	('Vebbis98', 'qwerqwer', '90415969', 'vebjoern.vaardal@gmail.com', 0),
+	('Testeboi1', 'qwerqwer', '90415969', 'vebjoern.vaardal@gmail.com', 0),
+	('Testeboi2', 'qwerqwer', '90415969', 'vebjoern.vaardal@gmail.com', 0);
 	
 CREATE TABLE resultat
 (

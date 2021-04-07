@@ -7,8 +7,10 @@ import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -16,7 +18,15 @@ import javax.persistence.Table;
 public class Resultat {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "sequence-generator"
+	)
+	@SequenceGenerator(
+			name = "sequence-generator",
+			sequenceName = "yatzy.resultat_id_seq",
+			allocationSize = 1
+	)
 	private int id;
 	private boolean startet;
 	private int spiller_tur;
@@ -65,27 +75,25 @@ public class Resultat {
 		yatzy = "";
 	}
 
-	public void leggTilKolonner(int antall) {
-		for (int i = 0; i < antall; i++) {
-			enere += "00000000000000000";
-			toere += "00000000000000000";
-			treere += "00000000000000000";
-			firere += "00000000000000000";
-			femmere += "00000000000000000";
-			seksere += "00000000000000000";
-			ett_par += "00000000000000000";
-			to_par += "00000000000000000";
-			tre_like += "00000000000000000";
-			fire_like += "00000000000000000";
-			liten_straight += "00000000000000000";
-			stor_straight += "00000000000000000";
-			hus += "00000000000000000";
-			sjanse += "00000000000000000";
-			yatzy += "00000000000000000";
-		}
+	private void leggTilKolonne() {
+		enere += "00000000000000000";
+		toere += "00000000000000000";
+		treere += "00000000000000000";
+		firere += "00000000000000000";
+		femmere += "00000000000000000";
+		seksere += "00000000000000000";
+		ett_par += "00000000000000000";
+		to_par += "00000000000000000";
+		tre_like += "00000000000000000";
+		fire_like += "00000000000000000";
+		liten_straight += "00000000000000000";
+		stor_straight += "00000000000000000";
+		hus += "00000000000000000";
+		sjanse += "00000000000000000";
+		yatzy += "00000000000000000";
 	}
 
-	public void fjernKolonne(int pos) {
+	private void fjernKolonne(int pos) {
 
 		enere = fjernKolonnebit(enere, pos);
 		toere = fjernKolonnebit(toere, pos);
@@ -131,9 +139,13 @@ public class Resultat {
 		return liste;
 	}
 
-	public void leggTilSpillere(List<Bruker> spillere) {
-		for (Bruker e : spillere)
-			this.spillere.add(e);
+	public void leggTilSpiller(Bruker spiller) {
+		if (startet)
+			return;
+		leggTilKolonne();
+		spillere.add(spiller);
+		if (spillere.size() > 5)
+			start();	
 	}
 
 	public void fjernSpiller(Bruker spiller) {
@@ -386,9 +398,9 @@ public class Resultat {
 		int poeng = 0;
 		String sisteKast = "";
 		if (spillerPos != spillere.size())
-			sisteKast = enere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
+			sisteKast = seksere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
 		else
-			sisteKast = enere.substring(12 + 17 * spillerPos);
+			sisteKast = seksere.substring(12 + 17 * spillerPos);
 		if (sisteKast.equals("00000"))
 			return -1;
 		for (int i = 0; i < 4; i++)
@@ -401,8 +413,10 @@ public class Resultat {
 	
 	private int regnSum (int spillerPos) {
 		int sum = 0;
-		for (int poeng : regnEnereTilSeksere(spillerPos))
-			sum += poeng;
+		for (int poeng : regnEnereTilSeksere(spillerPos)) {
+			if (poeng > -1)
+				sum += poeng;
+		}
 		return sum;
 	}
 	
@@ -686,17 +700,38 @@ public class Resultat {
 	}
 	
 	private int regnTotalt (int spillerPos) {
-		return regnEnere(spillerPos) + regnToere(spillerPos) + regnTreere(spillerPos) + regnFirere(spillerPos) + regnFemmere(spillerPos) + 
-				regnSeksere(spillerPos) + regnEttPar(spillerPos) + regnToPar(spillerPos) + regnTreLike(spillerPos) + regnFireLike(spillerPos) + 
-				regnLitenStraight(spillerPos) + regnStorStraight(spillerPos) + regnHus(spillerPos) + regnSjanse(spillerPos) + regnYatzy(spillerPos);
+		int totalt = regnSum(spillerPos) + regnBonus(spillerPos);
+		if (regnEttPar(spillerPos) > -1)
+			totalt += regnEttPar(spillerPos);
+		if (regnToPar(spillerPos) > -1)
+			totalt += regnToPar(spillerPos);
+		if (regnTreLike(spillerPos) > -1)
+			totalt += regnTreLike(spillerPos);
+		if (regnFireLike(spillerPos) > -1)
+			totalt += regnFireLike(spillerPos);
+		if (regnLitenStraight(spillerPos) > -1)
+			totalt += regnLitenStraight(spillerPos);
+		if (regnStorStraight(spillerPos) > -1)
+			totalt += regnStorStraight(spillerPos);
+		if (regnHus(spillerPos) > -1)
+			totalt += regnHus(spillerPos);
+		if (regnSjanse(spillerPos) > -1)
+			totalt += regnSjanse(spillerPos);
+		if (regnYatzy(spillerPos) > -1)
+			totalt += regnYatzy(spillerPos);
+		return totalt;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
 	public boolean isStartet() {
 		return startet;
+	}
+	
+	public void start() {
+		this.startet = true;
 	}
 	
 	public int getSpiller_tur() {
@@ -709,6 +744,10 @@ public class Resultat {
 
 	public int getRunde() {
 		return runde;
+	}
+
+	public void setFerdig_dato(String ferdig_dato) {
+		this.ferdig_dato = ferdig_dato;
 	}
 
 	public String getFerdig_dato() {

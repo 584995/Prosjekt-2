@@ -56,9 +56,9 @@ public class Bruker {
 	}
 	
 	public Resultat aktivtSpill () {
-		for (Resultat r : resultater)
-			if (r.getFerdig_dato() == null)
-				return r;
+		for (int i = resultater.size()-1; i > -1; i--)
+			if (resultater.get(i).getFerdig_dato() == null)
+				return resultater.get(i);
 		return null;
 	}
 	

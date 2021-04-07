@@ -33,8 +33,12 @@ public class YatzySpill {
 			
 			andreKast = s.substring(2 + spillerPos * 17 + 5, 2 + spillerPos * 17 + 10);
 			if (andreKast.equals("00000"))
-				return forsteKast;			
+				return forsteKast;
 		}
+		if (resultat.getRunde() == 15 && resultat.getKast_tur() == 2 && spillerPos == resultat.getSpillere().size())
+			return resultat.getYatzy().substring(2 + spillerPos * 17 + 5);
+		if (resultat.getRunde() == 15 && resultat.getKast_tur() == 2)
+			return resultat.getYatzy().substring(2 + spillerPos * 17 + 5, 2 + spillerPos * 17 + 10);
 		return null;
 	}
 	
