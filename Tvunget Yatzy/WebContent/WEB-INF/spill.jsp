@@ -59,8 +59,8 @@
 						<c:otherwise>
 							<h2>Vent på din tur.</h2>
 							<%
-	    						// Set refresh, autoload time as 3 seconds
-	    						response.setIntHeader("Refresh", 3);
+	    						// Set refresh, autoload time as 2 seconds
+	    						response.setIntHeader("Refresh", 2);
 	   	 					%>
 						</c:otherwise>
 					</c:choose>
