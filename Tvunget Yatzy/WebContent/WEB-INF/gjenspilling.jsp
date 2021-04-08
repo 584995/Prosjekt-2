@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +9,18 @@
 </head>
 <body>
 
-<div id="gjen">
-		<a href=""><button>Finn tidligere spill</button></a>
-		<a href=""><button>se pågående spill</button></a>
-		
-	</div>
+<p>resultater for ${brukernavn}</p>
+    <table>
+        <c:forEach items="${resultatliste}" var="p">
+            <tr>
+                <th>${p}</th>
+            </tr>
+        </c:forEach>
+    </table>
+    
+    <form action="Hovedmeny" method="get">
+            <button type="submit" >Gå tilbake til menyen</button>
+        </form>
 
 </body>
 </html>
