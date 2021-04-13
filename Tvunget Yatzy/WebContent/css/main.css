@@ -16,6 +16,17 @@ body {
 }
 
 table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
+	border: 1px solid black;
+  	border-collapse: collapse;
 }
+
+table.center, .center th, .center td{
+	border: 0px;
+	border-collapse: collapse;
+}
+
+table.center input {
+	margin: auto;
+	display: flex;
+}
+

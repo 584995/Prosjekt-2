@@ -41,16 +41,155 @@
 									</c:when>
 									<c:otherwise>
 										<p>Velg de du vil beholde:</p>
-										<label for="terning1">${terning1}</label>
-										<input type="checkbox" id="terning1" name="terning1" value="true"></input>
-										<label for="terning2">${terning2}</label>
-										<input type="checkbox" id="terning2" name="terning2" value="true"></input>
-										<label for="terning3">${terning3}</label>
-										<input type="checkbox" id="terning3" name="terning3" value="true"></input>
-										<label for="terning4">${terning4}</label>
-										<input type="checkbox" id="terning4" name="terning4" value="true"></input>
-										<label for="terning5">${terning5}</label>
-										<input type="checkbox" id="terning5" name="terning5" value="true"></input>
+										<table class="center">
+											<tr>
+												<td>
+													<label for="terning1">
+														<c:choose>
+															<c:when test="${terning1 == 6}">
+																<img alt="1" src="bilder/Seks.png">
+															</c:when>
+															<c:when test="${terning1 == 5}">
+																<img alt="2" src="bilder/Fem.png">
+															</c:when>
+															<c:when test="${terning1 == 4}">
+																<img alt="3" src="bilder/Fire.png">
+															</c:when>
+															<c:when test="${terning1 == 3}">
+																<img alt="4" src="bilder/Tre.png">
+															</c:when>
+															<c:when test="${terning1 == 2}">
+																<img alt="5" src="bilder/To.png">
+															</c:when>
+															<c:when test="${terning1 == 1}">
+																<img alt="5" src="bilder/En.png">
+															</c:when>
+															<c:otherwise>
+																<p>Feilmelding</p>
+															</c:otherwise>
+														</c:choose>
+													</label>
+													<input type="checkbox" id="terning1" name="terning1" value="true"></input>
+												</td>
+												<td>
+													<label for="terning2">
+														<c:choose>
+															<c:when test="${terning2 == 6}">
+																<img alt="1" src="bilder/Seks.png">
+															</c:when>
+															<c:when test="${terning2 == 5}">
+																<img alt="2" src="bilder/Fem.png">
+															</c:when>
+															<c:when test="${terning2 == 4}">
+																<img alt="3" src="bilder/Fire.png">
+															</c:when>
+															<c:when test="${terning2 == 3}">
+																<img alt="4" src="bilder/Tre.png">
+															</c:when>
+															<c:when test="${terning2 == 2}">
+																<img alt="5" src="bilder/To.png">
+															</c:when>
+															<c:when test="${terning2 == 1}">
+																<img alt="5" src="bilder/En.png">
+															</c:when>
+															<c:otherwise>
+																<p>Feilmelding</p>
+															</c:otherwise>
+														</c:choose>
+													</label>
+													<input type="checkbox" id="terning2" name="terning2" value="true"></input>
+												</td>
+												<td>
+													<label for="terning3">
+														<c:choose>
+															<c:when test="${terning3 == 6}">
+																<img alt="1" src="bilder/Seks.png">
+															</c:when>
+															<c:when test="${terning3 == 5}">
+																<img alt="2" src="bilder/Fem.png">
+															</c:when>
+															<c:when test="${terning3 == 4}">
+																<img alt="3" src="bilder/Fire.png">
+															</c:when>
+															<c:when test="${terning3 == 3}">
+																<img alt="4" src="bilder/Tre.png">
+															</c:when>
+															<c:when test="${terning3 == 2}">
+																<img alt="5" src="bilder/To.png">
+															</c:when>
+															<c:when test="${terning3 == 1}">
+																<img alt="5" src="bilder/En.png">
+															</c:when>
+															<c:otherwise>
+																<p>Feilmelding</p>
+															</c:otherwise>
+														</c:choose>
+													</label>
+													<input type="checkbox" id="terning3" name="terning3" value="true"></input>
+												</td>
+												<td>
+													<label for="terning4">
+														<c:choose>
+															<c:when test="${terning4 == 6}">
+																<img alt="1" src="bilder/Seks.png">
+															</c:when>
+															<c:when test="${terning4 == 5}">
+																<img alt="2" src="bilder/Fem.png">
+															</c:when>
+															<c:when test="${terning4 == 4}">
+																<img alt="3" src="bilder/Fire.png">
+															</c:when>
+															<c:when test="${terning4 == 3}">
+																<img alt="4" src="bilder/Tre.png">
+															</c:when>
+															<c:when test="${terning4 == 2}">
+																<img alt="5" src="bilder/To.png">
+															</c:when>
+															<c:when test="${terning4 == 1}">
+																<img alt="5" src="bilder/En.png">
+															</c:when>
+															<c:otherwise>
+																<p>Feilmelding</p>
+															</c:otherwise>
+														</c:choose>
+													</label>
+													<input type="checkbox" id="terning4" name="terning4" value="true"></input>
+												</td>
+												<td>
+													<label for="terning5">
+														<c:choose>
+															<c:when test="${terning5 == 6}">
+																<img alt="1" src="bilder/Seks.png">
+															</c:when>
+															<c:when test="${terning5 == 5}">
+																<img alt="2" src="bilder/Fem.png">
+															</c:when>
+															<c:when test="${terning5 == 4}">
+																<img alt="3" src="bilder/Fire.png">
+															</c:when>
+															<c:when test="${terning5 == 3}">
+																<img alt="4" src="bilder/Tre.png">
+															</c:when>
+															<c:when test="${terning5 == 2}">
+																<img alt="5" src="bilder/To.png">
+															</c:when>
+															<c:when test="${terning5 == 1}">
+																<img alt="5" src="bilder/En.png">
+															</c:when>
+															<c:otherwise>
+																<p>Feilmelding</p>
+															</c:otherwise>
+														</c:choose>
+													</label>
+													<input type="checkbox" id="terning5" name="terning5" value="true"></input>
+												</td>
+											</tr>
+										</table>
+										
+										
+										
+										
+										
 									</c:otherwise>
 								</c:choose>
 								<button type="submit" >Trill</button>
