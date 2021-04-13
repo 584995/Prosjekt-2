@@ -75,7 +75,7 @@ public class Resultat {
 		yatzy = "";
 	}
 
-	private void leggTilKolonne() {
+	public void leggTilKolonne() {
 		enere += "00000000000000000";
 		toere += "00000000000000000";
 		treere += "00000000000000000";
@@ -300,19 +300,19 @@ public class Resultat {
 	
 	private List<Integer> regnEnereTilSeksere (int spillerPos) {
 		List<Integer> regnetEnereTilSeksere = new ArrayList<Integer>();
-		regnetEnereTilSeksere.add(regnEnere(spillerPos));
-		regnetEnereTilSeksere.add(regnToere(spillerPos));
-		regnetEnereTilSeksere.add(regnTreere(spillerPos));
-		regnetEnereTilSeksere.add(regnFirere(spillerPos));
-		regnetEnereTilSeksere.add(regnFemmere(spillerPos));
-		regnetEnereTilSeksere.add(regnSeksere(spillerPos));
+		regnetEnereTilSeksere.add(regnEnere(spillerPos, spillere.size()));
+		regnetEnereTilSeksere.add(regnToere(spillerPos, spillere.size()));
+		regnetEnereTilSeksere.add(regnTreere(spillerPos, spillere.size()));
+		regnetEnereTilSeksere.add(regnFirere(spillerPos, spillere.size()));
+		regnetEnereTilSeksere.add(regnFemmere(spillerPos, spillere.size()));
+		regnetEnereTilSeksere.add(regnSeksere(spillerPos, spillere.size()));
 		return regnetEnereTilSeksere;
 	}
 	
-	private int regnEnere (int spillerPos) {
+	public int regnEnere (int spillerPos, int antallSpillere) {
 		int poeng = 0;
 		String sisteKast = "";
-		if (spillerPos != spillere.size())
+		if (spillerPos != antallSpillere)
 			sisteKast = enere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
 		else
 			sisteKast = enere.substring(12 + 17 * spillerPos);
@@ -326,10 +326,10 @@ public class Resultat {
 		return poeng;
 	}
 	
-	private int regnToere (int spillerPos) {
+	public int regnToere (int spillerPos, int antallSpillere) {
 		int poeng = 0;
 		String sisteKast = "";
-		if (spillerPos != spillere.size())
+		if (spillerPos != antallSpillere)
 			sisteKast = toere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
 		else
 			sisteKast = toere.substring(12 + 17 * spillerPos);
@@ -343,10 +343,10 @@ public class Resultat {
 		return poeng;
 	}
 	
-	private int regnTreere (int spillerPos) {
+	public int regnTreere (int spillerPos, int antallSpillere) {
 		int poeng = 0;
 		String sisteKast = "";
-		if (spillerPos != spillere.size())
+		if (spillerPos != antallSpillere)
 			sisteKast = treere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
 		else
 			sisteKast = treere.substring(12 + 17 * spillerPos);
@@ -360,10 +360,10 @@ public class Resultat {
 		return poeng;
 	}
 	
-	private int regnFirere (int spillerPos) {
+	public int regnFirere (int spillerPos, int antallSpillere) {
 		int poeng = 0;
 		String sisteKast = "";
-		if (spillerPos != spillere.size())
+		if (spillerPos != antallSpillere)
 			sisteKast = firere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
 		else
 			sisteKast = firere.substring(12 + 17 * spillerPos);
@@ -377,10 +377,10 @@ public class Resultat {
 		return poeng;
 	}
 	
-	private int regnFemmere (int spillerPos) {
+	public int regnFemmere (int spillerPos, int antallSpillere) {
 		int poeng = 0;
 		String sisteKast = "";
-		if (spillerPos != spillere.size())
+		if (spillerPos != antallSpillere)
 			sisteKast = femmere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
 		else
 			sisteKast = femmere.substring(12 + 17 * spillerPos);
@@ -394,10 +394,10 @@ public class Resultat {
 		return poeng;
 	}
 	
-	private int regnSeksere (int spillerPos) {
+	public int regnSeksere (int spillerPos, int antallSpillere) {
 		int poeng = 0;
 		String sisteKast = "";
-		if (spillerPos != spillere.size())
+		if (spillerPos != antallSpillere)
 			sisteKast = seksere.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
 		else
 			sisteKast = seksere.substring(12 + 17 * spillerPos);
@@ -411,7 +411,7 @@ public class Resultat {
 		return poeng;
 	}
 	
-	private int regnSum (int spillerPos) {
+	public int regnSum (int spillerPos) {
 		int sum = 0;
 		for (int poeng : regnEnereTilSeksere(spillerPos)) {
 			if (poeng > -1)
@@ -420,14 +420,14 @@ public class Resultat {
 		return sum;
 	}
 	
-	private int regnBonus (int spillerPos) {
+	public int regnBonus (int spillerPos) {
 		int sum = regnSum(spillerPos);
 		if (sum >= 63)
 			return 50;
 		return 0;
 	}
 	
-	private List<Integer> regnEttParTilYatzy (int spillerPos) {
+	public List<Integer> regnEttParTilYatzy (int spillerPos) {
 		List<Integer> regnetEttParTilYatzy = new ArrayList<Integer>();
 		regnetEttParTilYatzy.add(regnEttPar(spillerPos));
 		regnetEttParTilYatzy.add(regnToPar(spillerPos));
@@ -435,13 +435,13 @@ public class Resultat {
 		regnetEttParTilYatzy.add(regnFireLike(spillerPos));
 		regnetEttParTilYatzy.add(regnLitenStraight(spillerPos));
 		regnetEttParTilYatzy.add(regnStorStraight(spillerPos));
-		regnetEttParTilYatzy.add(regnHus(spillerPos));
+		regnetEttParTilYatzy.add(regnHus(spillerPos, spillere.size()));
 		regnetEttParTilYatzy.add(regnSjanse(spillerPos));
 		regnetEttParTilYatzy.add(regnYatzy(spillerPos));
 		return regnetEttParTilYatzy;
 	}
 	
-	private int regnEttPar (int spillerPos) {
+	public int regnEttPar (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
 		if (spillerPos != spillere.size())
@@ -469,7 +469,7 @@ public class Resultat {
 		return poeng;
 	}
 	
-	private int regnToPar (int spillerPos) {
+	public int regnToPar (int spillerPos) {
 		int poeng = 0;
 		boolean toParSjekk = false;
 		String sisteKast = "";
@@ -513,7 +513,7 @@ public class Resultat {
 		return 0;
 	}
 	
-	private int regnTreLike (int spillerPos) {
+	public int regnTreLike (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
 		if (spillerPos != spillere.size())
@@ -541,7 +541,7 @@ public class Resultat {
 		return poeng;
 	}
 	
-	private int regnFireLike (int spillerPos) {
+	public int regnFireLike (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
 		if (spillerPos != spillere.size())
@@ -569,7 +569,7 @@ public class Resultat {
 		return poeng;
 	}
 	
-	private int regnLitenStraight (int spillerPos) {
+	public int regnLitenStraight (int spillerPos) {
 		String sisteKast = "";
 		if (spillerPos != spillere.size())
 			sisteKast = liten_straight.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
@@ -586,7 +586,7 @@ public class Resultat {
 		return 0;
 	}
 	
-	private int regnStorStraight (int spillerPos) {
+	public int regnStorStraight (int spillerPos) {
 		String sisteKast = "";
 		if (spillerPos != spillere.size())
 			sisteKast = stor_straight.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
@@ -603,12 +603,12 @@ public class Resultat {
 		return 0;
 	}
 	
-	private int regnHus (int spillerPos) {
+	public int regnHus (int spillerPos, int antallSpillere) {
 		int poeng = 0;
 		boolean husSjekk = false;
 		int hjelpetall = 0;
 		String sisteKast = "";
-		if (spillerPos != spillere.size())
+		if (spillerPos != antallSpillere)
 			sisteKast = hus.substring(12 + 17 * spillerPos, 17 + 17 * spillerPos);
 		else
 			sisteKast = hus.substring(12 + 17 * spillerPos);
@@ -642,7 +642,7 @@ public class Resultat {
 			List<String> testeListe = liste.stream()
 			.filter(a -> a.contains("" + j))
 			.collect(Collectors.toList());
-			if (testeListe.size() > hjelpetall) {
+			if (testeListe.size() == hjelpetall) {
 				poeng += i * hjelpetall;
 				husSjekk = true;
 				break;
@@ -654,7 +654,7 @@ public class Resultat {
 		return 0;
 	}
 	
-	private int regnSjanse (int spillerPos) {
+	public int regnSjanse (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
 		if (spillerPos != spillere.size())
@@ -669,7 +669,7 @@ public class Resultat {
 		return poeng;
 	}
 	
-	private int regnYatzy (int spillerPos) {
+	public int regnYatzy (int spillerPos) {
 		boolean yatzySjekk = false;
 		String sisteKast = "";
 		if (spillerPos != spillere.size())
@@ -699,7 +699,7 @@ public class Resultat {
 		return 0;
 	}
 	
-	private int regnTotalt (int spillerPos) {
+	public int regnTotalt (int spillerPos) {
 		int totalt = regnSum(spillerPos) + regnBonus(spillerPos);
 		if (regnEttPar(spillerPos) > -1)
 			totalt += regnEttPar(spillerPos);
@@ -713,8 +713,8 @@ public class Resultat {
 			totalt += regnLitenStraight(spillerPos);
 		if (regnStorStraight(spillerPos) > -1)
 			totalt += regnStorStraight(spillerPos);
-		if (regnHus(spillerPos) > -1)
-			totalt += regnHus(spillerPos);
+		if (regnHus(spillerPos, spillere.size()) > -1)
+			totalt += regnHus(spillerPos, spillere.size());
 		if (regnSjanse(spillerPos) > -1)
 			totalt += regnSjanse(spillerPos);
 		if (regnYatzy(spillerPos) > -1)
