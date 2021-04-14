@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -53,7 +54,10 @@ public class Gjenspilling extends HttpServlet {
 			} catch (Throwable e) {
 			}
 			request.getSession().invalidate();
-			List<Resultat> resultater = brukerDAO.hentBruker(loggetinn.getValue()).getResultater();
+			List<Resultat> resultater = resultatDAO.hentAlleResultat();
+			String brukernavn = loggetinn.getValue();
+			resultater = resultater.stream().filter(a -> a.getSpillere().stream().map(b -> b.getBrukernavn())
+					.collect(Collectors.toList()).contains(brukernavn)).collect(Collectors.toList());
 			request.getSession().setAttribute("resultater", resultater);	
 			
 			//Henviser til gjenspillingmeny-side ved manglende resultat-id.
