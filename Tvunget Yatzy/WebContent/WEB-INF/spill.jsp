@@ -23,9 +23,16 @@
 											<th>${t}</th>
 										</c:forEach>
 									</c:when>
-									<c:otherwise>
+									<c:otherwise>										
 										<c:forEach items="${p}" var="t">
-											<td>${t}</td>
+											<c:choose>
+												<c:when test="${spillerSinTur.equals(t)}">													
+													<td bgcolor="#aaffaa">${t}</td>													
+												</c:when>
+												<c:otherwise>
+													<td>${t}</td>
+												</c:otherwise>
+											</c:choose>
 										</c:forEach>
 									</c:otherwise>
 								</c:choose>
