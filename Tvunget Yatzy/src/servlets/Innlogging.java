@@ -12,6 +12,7 @@ import javax.ejb.EJB;
 
 import database.Bruker;
 import database.BrukerDAO;
+import validering.BCrypt;
 /**
  * 
  * @author Prosjekt 2
@@ -65,7 +66,7 @@ public class Innlogging extends HttpServlet {
 		if (brukernavn != null)
 			bruker = brukerDAO.hentBruker(brukernavn);
 		if (bruker != null) {
-				logginn = passord.equals(bruker.getPassord());
+				logginn = BCrypt.checkpw(passord, bruker.getPassord());
 		}
 
 		// Logger inn og henviser til hovedmeny-servlet.

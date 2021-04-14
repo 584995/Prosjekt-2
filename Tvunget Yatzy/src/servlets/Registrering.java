@@ -12,7 +12,7 @@ import javax.ejb.EJB;
 
 import database.Bruker;
 import database.BrukerDAO;
-import test.Validator;
+import validering.Validator;
 /**
  * 
  * @author Prosjekt 2

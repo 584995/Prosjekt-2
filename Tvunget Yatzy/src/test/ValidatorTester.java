@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.*;
 
+import validering.Validator;
+
 public class ValidatorTester {
 
 	

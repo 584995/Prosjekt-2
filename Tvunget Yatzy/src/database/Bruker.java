@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import validering.BCrypt;
+
 @Entity
 @Table(schema = "yatzy", name = "bruker")
 public class Bruker {
@@ -30,7 +32,7 @@ public class Bruker {
 	
 	public Bruker(String brukernavn, String passord, int mobil, String epost) {
 		this.brukernavn = brukernavn;
-		this.passord = passord;
+		this.passord = BCrypt.hashpw(passord, BCrypt.gensalt(12));
 		this.mobil = mobil;
 		this.epost = epost;
 		purringer = 0;
