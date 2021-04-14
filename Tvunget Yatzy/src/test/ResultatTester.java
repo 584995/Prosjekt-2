@@ -9,13 +9,9 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-
-
 import database.Bruker;
 import database.Resultat;
 
-
-import static org.mockito.Mockito.when;
 
 public class ResultatTester {
 	
@@ -53,8 +49,8 @@ public class ResultatTester {
 	@Test
 	public void testEnere() {
 		
-		int res1 = resultat.regnEnere(0, 2); //skal være 3
-		int res2 = resultat.regnEnere(1, 2); //Skal være 1
+		int res1 = resultat.regnEnere(0); //skal være 3
+		int res2 = resultat.regnEnere(1); //Skal være 1
 		
 		assertEquals(3, res1);
 		assertNotEquals(2, res2);
@@ -63,8 +59,8 @@ public class ResultatTester {
 	@Test
 	public void testToere() {
 		
-		int res1 = resultat.regnToere(0, 2); //skal være 4
-		int res2 = resultat.regnToere(1, 2); //skal være 0
+		int res1 = resultat.regnToere(0); //skal være 4
+		int res2 = resultat.regnToere(1); //skal være 0
 		
 		assertEquals(4, res1);
 		assertNotEquals(2, res2);
@@ -73,8 +69,8 @@ public class ResultatTester {
 	@Test
 	public void testTreere() {
 		
-		int res1 = resultat.regnTreere(0, 2); //skal være 12
-		int res2 = resultat.regnTreere(1, 2); //skal være 0
+		int res1 = resultat.regnTreere(0); //skal være 12
+		int res2 = resultat.regnTreere(1); //skal være 0
 		
 		assertEquals(12, res1);
 		assertEquals(0, res2);
@@ -83,8 +79,8 @@ public class ResultatTester {
 	@Test
 	public void testFirere() {
 		
-		int res1 = resultat.regnFirere(0, 2); //skal være 8
-		int res2 = resultat.regnFirere(1, 2); //skal være 0
+		int res1 = resultat.regnFirere(0); //skal være 8
+		int res2 = resultat.regnFirere(1); //skal være 0
 		
 		assertEquals(8, res1);
 		assertEquals(0, res2);
@@ -93,8 +89,8 @@ public class ResultatTester {
 	@Test
 	public void testFemmere() {
 		
-		int res1 = resultat.regnFemmere(0, 2); //skal være 15
-		int res2 = resultat.regnFemmere(1, 2); //skal være 20
+		int res1 = resultat.regnFemmere(0); //skal være 15
+		int res2 = resultat.regnFemmere(1); //skal være 20
 		
 		assertEquals(15, res1);
 		assertEquals(20, res2);
@@ -103,8 +99,8 @@ public class ResultatTester {
 	@Test
 	public void testSeksere() {
 		
-		int res1 = resultat.regnSeksere(0, 2); //skal være 30
-		int res2 = resultat.regnSeksere(1, 2); //skal være 0
+		int res1 = resultat.regnSeksere(0); //skal være 30
+		int res2 = resultat.regnSeksere(1); //skal være 0
 		
 		assertEquals(30, res1);
 		assertEquals(0, res2);
@@ -193,8 +189,8 @@ public class ResultatTester {
 	@Test
 	public void testHus() {
 		
-		int hus1 = resultat.regnHus(0, 2); //skal være 7
-		int hus2 = resultat.regnHus(1, 2); //skal være 27
+		int hus1 = resultat.regnHus(0); //skal være 7
+		int hus2 = resultat.regnHus(1); //skal være 27
 		
 		assertEquals(7, hus1);
 		assertEquals(27, hus2);
