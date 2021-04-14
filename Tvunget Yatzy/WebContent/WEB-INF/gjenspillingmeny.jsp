@@ -12,21 +12,20 @@
 	<form action="Gjenspilling" method="post">
 		<fieldset>
 			<div>
-				<label for="resultatId">Velg et spill:</label>
-				<select id="resultatId" name="resultatId">
+				<select name="test">
 					<option value="" selected>-----Velg_et_spill-----</option>
 					<c:forEach items="${resultater}" var="d">
 						<c:choose>
 							<c:when test="${d.ferdig_dato != null}">
-								<option value="${d.id}">${d.ferdig_dato}</option>
+								<option value="${d.id}">Dato:  ${d.ferdig_dato}</option>
+								
 							</c:when>
 						</c:choose>
 					</c:forEach>
 				</select>
+				<input type="submit" value="Submit">
 			</div>
-			<div>
-				<button type="submit" >Gjenspill</button>
-			</div>
+			
 		</fieldset>
 	</form>
 	<form action="Hovedmeny" method="get">

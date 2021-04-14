@@ -49,7 +49,7 @@ public class Gjenspilling extends HttpServlet {
 			// Sjekker for resultat-id.
 			int resId = 0;
 			try {
-				resId = Integer.parseInt((String) request.getAttribute("resPos"));
+				resId = Integer.parseInt((String) request.getSession().getAttribute("resId"));
 			} catch (Throwable e) {
 			}
 			request.getSession().invalidate();
@@ -65,6 +65,8 @@ public class Gjenspilling extends HttpServlet {
 			Resultat resultat = resultatDAO.hentResultat(resId);
 			List<String> resultatListe = resultat.lagListe();
 			request.getSession().setAttribute("resultatListe", resultatListe);
+			request.getSession().setAttribute("spillere", resultat.getSpillere());
+			request.getSession().setAttribute("poengTabell", resultat.poengTabell());
 			request.getRequestDispatcher("WEB-INF/gjenspilling.jsp").forward(request, response);
 			}
 			
@@ -75,7 +77,7 @@ public class Gjenspilling extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String resId = request.getParameter("resId");
+		String resId = request.getParameter("test");
 		request.getSession().setAttribute("resId", resId);	
 		response.sendRedirect("Gjenspilling");
 		
