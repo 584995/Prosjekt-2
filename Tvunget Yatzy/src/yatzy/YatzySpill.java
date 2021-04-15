@@ -16,11 +16,11 @@ public class YatzySpill {
 		terning = new Terning();
 	}
 	
-	/** 
+	/** Triller terning for alle verdier som boolean false
 	 * 
-	 * @param resultat
-	 * @param bruker
-	 * @param behold
+	 * @param resultat resultatet for spillet
+	 * @param bruker Brukeren som kaster
+	 * @param behold terningen som brukeren har valgt å beholde
 	 */
 	public void spillTur(Resultat resultat, Bruker bruker, List<Boolean> behold) {
 		
@@ -31,11 +31,11 @@ public class YatzySpill {
 		
 	}
 	
-	/**
+	/** Finner ut terninger sine verdier ved hjelp av forgje kast
 	 * 
-	 * @param resultat
-	 * @param bruker
-	 * @return
+	 * @param resultat Resultat for spillet 
+	 * @param bruker Brukeren som kaster
+	 * @return returnerer terningene
 	 */
 	public String forrigeKast (Resultat resultat, Bruker bruker) {
 		List<String> tabell = resultat.lagListe();
@@ -58,11 +58,11 @@ public class YatzySpill {
 		return null;
 	}
 	
-	/**
+	/** Sjekker hvilke terninger som har blitt beholdt, og triller resten.
 	 * 
-	 * @param forrigeKast
-	 * @param behold
-	 * @return
+	 * @param forrigeKast henter verdiene fra forgje kast
+	 * @param behold terninger som har blitt beholdt
+	 * @return terningkastet
 	 */
 	public String terningkast(String forrigeKast, List<Boolean> behold) {
 		
@@ -91,37 +91,5 @@ public class YatzySpill {
 		return terningkast;
 		
 	}
-	
-	/*public Bruker sinTur(Resultat resultat) {
-		List<String> tabell = resultat.lagListe();
-		List<Bruker> spillere = resultat.getSpillere();
-		for (String s : tabell) {
-			for (int i = 0; i < spillere.size(); i++) {
-				if (i < spillere.size() - 1) {
-					if (s.substring(i * 15 + 10, (i+1) * 15).equals("00000"))
-						return spillere.get(i);
-				} else {
-					if (s.substring(i * 15 + 10).equals("00000"))
-						return spillere.get(i);
-				}
-			}
-		}
-		resultat.setFerdig_dato(LocalDate.now().getDayOfMonth() + "." + LocalDate.now().getMonthValue() + "." + LocalDate.now().getYear());
-		return null;
-	}*/
-
-	
-	/*public String velgTerninger(List<Boolean> behold, List<Integer> verdier) {
-		for(int i = 0; i< behold.size();i++) {
-			if(behold.get(i)) {
-				verdier.set(i,0);
-			}
-		}
-		String verdi="";
-		for(int i : verdier) {
-			verdi+= i;
-		}
-		return verdi;
-	}*/
 	
 }
