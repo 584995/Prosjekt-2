@@ -14,14 +14,18 @@ import static org.mockito.Mockito.*;
 
 import database.Bruker;
 import database.BrukerDAO;
-
+/**
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
+ */
 public class BrukerTester {
 	
 	private BrukerDAO dao;
 	private EntityManager entityManager;
 	
 	@Before
-	public void setup() {
+		public void setup() {
 		
 		dao = new BrukerDAO();
 

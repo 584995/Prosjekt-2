@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 /**
- * 
- * @author Prosjekt 2
- *
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
  */
 @WebServlet("/Utlogging")
 public class Utlogging extends HttpServlet {

@@ -5,7 +5,11 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
+/**
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
+ */
 @Stateless
 public class ResultatDAO {
 

@@ -7,7 +7,11 @@ import static org.junit.Assert.assertTrue;
 import org.junit.*;
 
 import validering.Validator;
-
+/**
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
+ */
 public class ValidatorTester {
 
 	

@@ -17,7 +17,11 @@ import database.Bruker;
 import database.BrukerDAO;
 import database.Resultat;
 import database.ResultatDAO;
-
+/**
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
+ */
 /**
  * Servlet implementation class Hovedmeny
  */

@@ -14,9 +14,9 @@ import database.Bruker;
 import database.BrukerDAO;
 import validering.BCrypt;
 /**
- * 
- * @author Prosjekt 2
- *
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
  */
 @WebServlet("/Innlogging")
 public class Innlogging extends HttpServlet {

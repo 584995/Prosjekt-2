@@ -1,5 +1,9 @@
 package validering;
-
+/**
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
+ */
 public class Validator {
 	
 	//godtar alle bokstaver, tall, bindestrek og mellomrom, skal ha lengde på 2-20

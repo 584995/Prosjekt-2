@@ -13,7 +13,11 @@ import org.junit.Test;
 import database.Bruker;
 import database.Resultat;
 import yatzy.YatzySpill;
-
+/**
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
+ */
 public class YatzySpillTester {
 
 	private Resultat resultat = new Resultat();

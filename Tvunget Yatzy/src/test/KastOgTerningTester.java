@@ -6,7 +6,11 @@ import org.junit.Test;
 
 import yatzy.Terning;
 import yatzy.Terningkast;
-
+/**
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
+ */
 public class KastOgTerningTester {
 
 	public Terning terning = new Terning();

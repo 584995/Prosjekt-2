@@ -14,9 +14,9 @@ import database.Bruker;
 import database.BrukerDAO;
 import validering.Validator;
 /**
- * 
- * @author Prosjekt 2
- *
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
  */
 @WebServlet("/Registrering")
 public class Registrering extends HttpServlet {

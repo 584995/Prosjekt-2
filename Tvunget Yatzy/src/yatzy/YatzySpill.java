@@ -4,7 +4,11 @@ import java.util.List;
 
 import database.Bruker;
 import database.Resultat;
-
+/**
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
+ */
 public class YatzySpill {
 	private Terning terning;
 	
@@ -12,6 +16,12 @@ public class YatzySpill {
 		terning = new Terning();
 	}
 	
+	/** 
+	 * 
+	 * @param resultat
+	 * @param bruker
+	 * @param behold
+	 */
 	public void spillTur(Resultat resultat, Bruker bruker, List<Boolean> behold) {
 		
 		String forrigeKast = forrigeKast(resultat, bruker);		
@@ -21,6 +31,12 @@ public class YatzySpill {
 		
 	}
 	
+	/**
+	 * 
+	 * @param resultat
+	 * @param bruker
+	 * @return
+	 */
 	public String forrigeKast (Resultat resultat, Bruker bruker) {
 		List<String> tabell = resultat.lagListe();
 		int spillerPos = resultat.getSpiller_tur();
@@ -42,6 +58,12 @@ public class YatzySpill {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param forrigeKast
+	 * @param behold
+	 * @return
+	 */
 	public String terningkast(String forrigeKast, List<Boolean> behold) {
 		
 		String terningkast = "";

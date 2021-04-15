@@ -13,9 +13,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 /**
- * 
- * @author Prosjektgruppe 2
- *
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
  */
 @Entity
 @Table(schema = "yatzy", name = "resultat")

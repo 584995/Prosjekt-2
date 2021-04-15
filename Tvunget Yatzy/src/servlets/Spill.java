@@ -17,7 +17,11 @@ import database.BrukerDAO;
 import database.Resultat;
 import database.ResultatDAO;
 import yatzy.YatzySpill;
-
+/**
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
+ */
 @WebServlet("/Spill")
 public class Spill extends HttpServlet {
 	private static final long serialVersionUID = 1L;

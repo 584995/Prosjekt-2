@@ -11,9 +11,9 @@ import javax.persistence.Table;
 
 import validering.BCrypt;
 /**
- * 
- * @author Prosjektgruppe 2
- *
+ * @author     Prosjektgruppe 2
+ * @version     12                 
+ * @since       12    
  */
 @Entity
 @Table(schema = "yatzy", name = "bruker")
