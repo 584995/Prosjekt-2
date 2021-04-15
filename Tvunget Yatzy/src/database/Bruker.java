@@ -37,15 +37,21 @@ public class Bruker {
 		this.epost = epost;
 		purringer = 0;
 	}
-	
+	//Legger til resultat av yatzy spill eller runde for brukeren.
 	public void leggTilResultat (Resultat resultat) {
 		resultater.add(resultat);
 	}
 	
+	//Fjerner resultat av yatzy spill eller runde for brukeren.
 	public void fjernResultat (Resultat resultat) {
 		resultater.remove(resultat);
 	}
 	
+	/**Sjekker om brukeren er i et spill.
+	 * 
+	 * @return true dersom spiller er i et spill, ellers false
+	 * 
+	 */
 	public boolean erISpill () {
 		if(resultater.size() == 0) {
 			return false;
@@ -57,6 +63,11 @@ public class Bruker {
 		return false;
 	}
 	
+	/** Returnerer brukerens resultat for aktiv runde.
+	 * 
+	 * @return resultatet som spiller er aktiv i, ellers null
+	 * 
+	 */
 	public Resultat aktivtSpill () {
 		for (int i = resultater.size()-1; i > -1; i--)
 			if (resultater.get(i).getFerdig_dato() == null)

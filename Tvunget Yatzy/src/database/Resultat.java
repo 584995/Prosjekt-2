@@ -12,7 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
+/**
+ * 
+ * @author Prosjektgruppe 2
+ *
+ */
 @Entity
 @Table(schema = "yatzy", name = "resultat")
 public class Resultat {
@@ -52,6 +56,7 @@ public class Resultat {
 	@ManyToMany(mappedBy = "resultater")
 	List<Bruker> spillere;
 
+	//Gir variablene start verdi.
 	public Resultat() {
 		startet = false;
 		spiller_tur = 0;
@@ -75,6 +80,7 @@ public class Resultat {
 		yatzy = "";
 	}
 
+	//Gir lengden til variablene for en spiller.
 	public void leggTilKolonne() {
 		enere += "00000000000000000";
 		toere += "00000000000000000";
@@ -93,7 +99,12 @@ public class Resultat {
 		yatzy += "00000000000000000";
 	}
 
+	/** Fjerner resultatet til en spiller.
+	 * 
+	 * @param pos posisjonen til spilleren.
+	 */
 	private void fjernKolonne(int pos) {
+
 
 		enere = fjernKolonnebit(enere, pos);
 		toere = fjernKolonnebit(toere, pos);
@@ -113,12 +124,22 @@ public class Resultat {
 
 	}
 
+	/** Fjerner resultatet fra variablene til en spiller.
+	 * 
+	 * @param rad den valgte raden i kolonnen (enere,toere.....yatzy)
+	 * @param pos posisjonen til spilleren
+	 * @return Returnerer raden utenom den valgte biten av raden som ble fjernet.
+	 */
 	private String fjernKolonnebit(String rad, int pos) {
 		if (pos * 17 == rad.length())
 			return rad.substring(0, 0 + pos * 17);
 		return rad.substring(0, 0 + pos * 17) + rad.substring(17 + pos * 17);
 	}	
 
+	/** Lager en liste av type array.list for alle variabler.
+	 * 
+	 * @return listen
+	 */
 	public List<String> lagListe() {
 		List<String> liste = new ArrayList<String>();
 		liste.add(enere);
@@ -139,6 +160,10 @@ public class Resultat {
 		return liste;
 	}
 
+	/** Legger til en spiller. 
+	 *  
+	 * @param spiller Spilleren som skal legges til
+	 */
 	public void leggTilSpiller(Bruker spiller) {
 		if (startet)
 			return;
@@ -148,6 +173,10 @@ public class Resultat {
 			start();	
 	}
 
+	/** Fjerner en spiller.
+	 * 
+	 * @param spiller Spiller som skal fjernes 
+	 */
 	public void fjernSpiller(Bruker spiller) {
 		int pos = spillerPos(spiller);
 		fjernKolonne(pos);
@@ -162,6 +191,11 @@ public class Resultat {
 		}
 	}
 	
+	/** Finner spilleren sin posisjon i resultat
+	 * 
+	 * @param spiller Spiller som skal bli funnet
+	 * @return Spilleren sin posisjon
+	 */
 	public int spillerPos (Bruker spiller) {
 		int i = 0;
 		for (Bruker b : spillere) {
@@ -172,6 +206,10 @@ public class Resultat {
 		return -1;
 	}
 
+	/** Lagrer kast til spiller i resultat
+	 * 
+	 * @param kast Kastet som skal lagres
+	 */
 	public void lagreKast(String kast) {
 		int rad = 0;
 		for (String str : lagListe()) {			
@@ -220,6 +258,12 @@ public class Resultat {
 
 	}
 
+	/** Hjelpemetode for å lagre et kast
+	 * 
+	 * @param rad Den aktuelle raden for spillet
+	 * @param kast Kastet som skal bli lagres
+	 * @return Raden etter den har blitt endret.
+	 */
 	private String lagreHjelp(String rad, String kast) {
 		if (kast_tur == 0) {
 			return rad.substring(0, (spiller_tur * 17) + (kast_tur * 5)) + String.format("%02d", runde) + kast
@@ -230,12 +274,14 @@ public class Resultat {
 		}	
 	}
 	
+	//Begynner neste kast for spilleren
 	public void nesteKast() {
 		kast_tur++;
 		if (kast_tur == 3)
 			nesteSpiller();
 	}
 	
+	//Bytter til neste spiller
 	public void nesteSpiller() {
 		spiller_tur++;
 		kast_tur = 0;
@@ -243,6 +289,11 @@ public class Resultat {
 			nesteRunde();
 	}
 	
+	/** Starter neste runde i yatzy spillet
+	 * <p>
+	 * Lagrer ferdigdato hvis det er siste runde
+	 * 
+	 */
 	public void nesteRunde() {
 		runde++;
 		spiller_tur = 0;
@@ -251,6 +302,10 @@ public class Resultat {
 		}
 	}
 	
+	/** Legger sammen totalsum for et helt yazty spil
+	 * 
+	 * @return En tabell med poeng til spillerene
+	 */
 	public List<List<String>> poengTabell() {
 		List<List<String>> poengTabell = new ArrayList<List<String>>();
 		List<String> poengKolonne = new ArrayList<String>();
@@ -298,6 +353,11 @@ public class Resultat {
 		return poengTabell;
 	}
 	
+	/** Regner ut sum fra Enere til Seksere
+	 * 
+	 * @param spillerPos Spilleren sin posisjon i raden
+	 * @return Sum av enere til seksere.
+	 */
 	private List<Integer> regnEnereTilSeksere (int spillerPos) {
 		List<Integer> regnetEnereTilSeksere = new ArrayList<Integer>();
 		regnetEnereTilSeksere.add(regnEnere(spillerPos));
@@ -309,6 +369,11 @@ public class Resultat {
 		return regnetEnereTilSeksere;
 	}
 	
+	/** Regner ut om spilleren fikk enere, og poengsummen
+     * 
+     * @param spillerPos Spilleren sin posisjon i raden
+     * @return Poengsummen av enere til spilleren
+     */
 	public int regnEnere (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
@@ -326,6 +391,11 @@ public class Resultat {
 		return poeng;
 	}
 	
+	/** Regner ut om spilleren fikk toere, og poengsummen
+     * 
+     * @param spillerPos Spilleren sin posisjon i raden
+     * @return Poengsummen av toere til spilleren
+     */
 	public int regnToere (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
@@ -343,6 +413,11 @@ public class Resultat {
 		return poeng;
 	}
 	
+	/** Regner ut om spilleren fikk treere, og poengsummen
+     * 
+     * @param spillerPos Spilleren sin posisjon i raden
+     * @return Poengsummen av treere til spilleren
+     */
 	public int regnTreere (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
@@ -360,6 +435,11 @@ public class Resultat {
 		return poeng;
 	}
 	
+	/** Regner ut om spilleren fikk firere, og poengsummen
+     * 
+     * @param spillerPos Spilleren sin posisjon i raden
+     * @return Poengsummen av firere til spilleren
+     */
 	public int regnFirere (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
@@ -377,6 +457,11 @@ public class Resultat {
 		return poeng;
 	}
 	
+	/** Regner ut om spilleren fikk femmere, og poengsummen
+     * 
+     * @param spillerPos Spilleren sin posisjon i raden
+     * @return Poengsummen av femmere til spilleren
+     */
 	public int regnFemmere (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
@@ -394,6 +479,11 @@ public class Resultat {
 		return poeng;
 	}
 	
+	/** Regner ut om spilleren fikk seksere, og poengsummen
+     * 
+     * @param spillerPos Spilleren sin posisjon i raden
+     * @return Poengsummen av seksere til spilleren
+     */
 	public int regnSeksere (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
@@ -411,6 +501,11 @@ public class Resultat {
 		return poeng;
 	}
 	
+	/** Regner ut summen til spilleren
+     * 
+     * @param spillerPos Spilleren sin posisjon i raden
+     * @return Sum til spilleren
+     */
 	public int regnSum (int spillerPos) {
 		int sum = 0;
 		for (int poeng : regnEnereTilSeksere(spillerPos)) {
@@ -420,6 +515,11 @@ public class Resultat {
 		return sum;
 	}
 	
+	/** Regner ut om spilleren fikk bonus, og gir bonus dersom spilleren fikk over 63 poeng.
+     * 
+     * @param spillerPos Spilleren sin posisjon i raden
+     * @return Bonus dersom spilleren fikk bonus
+     */
 	public int regnBonus (int spillerPos) {
 		int sum = regnSum(spillerPos);
 		if (sum >= 63)
@@ -427,6 +527,11 @@ public class Resultat {
 		return 0;
 	}
 	
+	/** Regner ut fra spilleren sin sum fra Ett par til Yatzy
+     * 
+     * @param spillerPos Spilleren sin posisjon i raden
+     * @return Sum av et par til yatzy 
+     */
 	public List<Integer> regnEttParTilYatzy (int spillerPos) {
 		List<Integer> regnetEttParTilYatzy = new ArrayList<Integer>();
 		regnetEttParTilYatzy.add(regnEttPar(spillerPos));
@@ -441,6 +546,11 @@ public class Resultat {
 		return regnetEttParTilYatzy;
 	}
 	
+	/**Regner ut hvis spiller fikk ett par og poengsummen 
+	 * 
+	 * @param spillerPos Spilleren sin posisjon i raden til resultatet
+	 * @return Poengsummen til spilleren
+	 */
 	public int regnEttPar (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
@@ -469,6 +579,11 @@ public class Resultat {
 		return poeng;
 	}
 	
+	/**Regner ut hvis spiller fikk to par og poengsummen 
+	 * 
+	 * @param spillerPos Spilleren sin posisjon i raden til resultatet
+	 * @return Poengsummen til spilleren
+	 */
 	public int regnToPar (int spillerPos) {
 		int poeng = 0;
 		boolean toParSjekk = false;
@@ -513,6 +628,11 @@ public class Resultat {
 		return 0;
 	}
 	
+	/**Regner ut hvis spiller fikk tre like og poengsummen 
+	 * 
+	 * @param spillerPos Spilleren sin posisjon i raden til resultatet
+	 * @return Poengsummen til spilleren
+	 */
 	public int regnTreLike (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
@@ -541,6 +661,11 @@ public class Resultat {
 		return poeng;
 	}
 	
+	/**Regner ut hvis spiller fikk firelike og poengsummen 
+	 * 
+	 * @param spillerPos Spilleren sin posisjon i raden til resultatet
+	 * @return Poengsummen til spilleren
+	 */
 	public int regnFireLike (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
@@ -569,6 +694,11 @@ public class Resultat {
 		return poeng;
 	}
 	
+	/**Regner ut hvis spiller fikk litenstraight og poengsummen 
+	 * 
+	 * @param spillerPos Spilleren sin posisjon i raden til resultatet
+	 * @return Poengsummen til spilleren
+	 */
 	public int regnLitenStraight (int spillerPos) {
 		String sisteKast = "";
 		if (spillerPos != spillere.size())
@@ -586,6 +716,11 @@ public class Resultat {
 		return 0;
 	}
 	
+	/**Regner ut hvis spiller fikk storstraight og poengsummen 
+	 * 
+	 * @param spillerPos Spilleren sin posisjon i raden til resultatet
+	 * @return Poengsummen til spilleren
+	 */
 	public int regnStorStraight (int spillerPos) {
 		String sisteKast = "";
 		if (spillerPos != spillere.size())
@@ -603,6 +738,11 @@ public class Resultat {
 		return 0;
 	}
 	
+	/**Regner ut hvis spiller fikk hus og poengsummen 
+	 * 
+	 * @param spillerPos Spilleren sin posisjon i raden til resultatet
+	 * @return Poengsummen til spilleren
+	 */
 	public int regnHus (int spillerPos) {
 		int poeng = 0;
 		boolean husSjekk = false;
@@ -654,6 +794,11 @@ public class Resultat {
 		return 0;
 	}
 	
+	/**Regner hva poengsum spilleren fikk i sjanse
+	 *  
+	 * @param spillerPos Spilleren sin posisjon i raden til resultatet
+	 * @return Poengsummen til spilleren
+	 */
 	public int regnSjanse (int spillerPos) {
 		int poeng = 0;
 		String sisteKast = "";
@@ -669,6 +814,11 @@ public class Resultat {
 		return poeng;
 	}
 	
+	/**Regner ut hvis spiller fikk yatzy og poengsummen 
+	 * 
+	 * @param spillerPos Spilleren sin posisjon i raden 
+	 * @return Poengsummen til spilleren
+	 */
 	public int regnYatzy (int spillerPos) {
 		boolean yatzySjekk = false;
 		String sisteKast = "";
@@ -699,6 +849,12 @@ public class Resultat {
 		return 0;
 	}
 	
+	
+	/** Regner ut totalpoengsum til en spiller
+     *
+     * @param spillerPos Spiller sin posisjon i resultatet
+     * @return Totalpoengsummen til spilleren
+     */
 	public int regnTotalt (int spillerPos) {
 		int totalt = regnSum(spillerPos) + regnBonus(spillerPos);
 		if (regnEttPar(spillerPos) > -1)
