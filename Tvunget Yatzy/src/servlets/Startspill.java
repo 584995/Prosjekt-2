@@ -52,6 +52,9 @@ public class Startspill extends HttpServlet {
 			Resultat resultat = resultatDAO.hentResultat(spiller.aktivtSpill().getId());
 			if (resultat.getSpillere().size() > 1) {
 				resultat.start();
+				 for(Bruker b: resultat.getSpillere()) {
+	                    Mailer.send(b.getEpost(), "Tvunget yatzy", "Tvunget yatzy har nå startet!");
+	                }
 				resultatDAO.oppdaterResultat(resultat);
 			}
 			response.sendRedirect("Spill");

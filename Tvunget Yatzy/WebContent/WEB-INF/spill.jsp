@@ -208,6 +208,10 @@
 	    						// Set refresh, autoload time as 2 seconds
 	    						response.setIntHeader("Refresh", 2);
 	   	 					%>
+	   	 					 <form action="Spill" method="post">
+                            <h3>Venter ${spillerSinTur} for lenge? <input type="submit" name="vekk" value="Vekk"></h3>
+                            <input type="hidden" name="spillerSinTur" value="${spillerSinTur}"> 
+                            </form>
 						</c:otherwise>
 					</c:choose>
 			</c:when>

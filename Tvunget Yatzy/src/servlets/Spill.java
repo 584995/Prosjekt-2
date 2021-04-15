@@ -16,6 +16,7 @@ import database.Bruker;
 import database.BrukerDAO;
 import database.Resultat;
 import database.ResultatDAO;
+import yatzy.Mailer;
 import yatzy.YatzySpill;
 /**
  * @author     Prosjektgruppe 2
@@ -95,7 +96,32 @@ public class Spill extends HttpServlet {
 		Bruker spiller = brukerDAO.hentBruker(brukernavn);
 		Resultat resultat = resultatDAO.hentResultat(spiller.aktivtSpill().getId());
 		int spillerPos = resultat.spillerPos(spiller);
-
+		
+		if (request.getParameter("vekk") != null) {
+            Bruker spillerSinTur=brukerDAO.hentBruker(request.getParameter("spillerSinTur"));
+            
+            spillerSinTur.setPurringer(spillerSinTur.getPurringer()+1);
+                
+            if(spillerSinTur.getPurringer()==3) {
+                Mailer.send(spillerSinTur.getEpost(), "Tvunget-Yatzy-Varsel", "Du ble kastet ut av spillet.");
+                resultat.fjernSpiller(spillerSinTur);
+                spillerSinTur.fjernResultat(resultat);
+                spillerSinTur.setPurringer(0);
+                resultat.nesteSpiller();
+            } else {
+                Mailer.send(spillerSinTur.getEpost(), "Tvunget-Yatzy-Varsel", "Det er din tur nå.");
+            }
+            if(resultat.getSpillere().size()==1) {    
+                resultat.fjernSpiller(spiller);
+                spiller.fjernResultat(resultat);
+                brukerDAO.oppdaterBruker(spiller);
+            }
+            
+            brukerDAO.oppdaterBruker(spillerSinTur);
+            resultatDAO.oppdaterResultat(resultat);
+            
+       
+        }
 		if (resultat.getSpiller_tur() == spillerPos) {
 			String terning1 = request.getParameter("terning1");
 			String terning2 = request.getParameter("terning2");
