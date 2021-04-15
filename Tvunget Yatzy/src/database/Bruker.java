@@ -10,7 +10,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import validering.BCrypt;
-
+/**
+ * 
+ * @author Prosjektgruppe 2
+ *
+ */
 @Entity
 @Table(schema = "yatzy", name = "bruker")
 public class Bruker {
