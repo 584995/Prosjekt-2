@@ -32,4 +32,8 @@ public class ResultatDAO {
 		return em.find(Resultat.class, id);
 	}
 	
+	public void fjernResultat (Resultat resultat) {
+		em.remove(resultat);
+	}
+	
 }

@@ -112,17 +112,15 @@ public class Spill extends HttpServlet {
                 Mailer.send(spillerSinTur.getEpost(), "Tvunget-Yatzy-Varsel", "Det er din tur nå.");
             }
             if(resultat.getSpillere().size()==1) {    
-                resultat.fjernSpiller(spiller);
-                spiller.fjernResultat(resultat);
+                spiller.setPurringer(0);
                 brukerDAO.oppdaterBruker(spiller);
-            }
-            
-            brukerDAO.oppdaterBruker(spillerSinTur);
-            resultatDAO.oppdaterResultat(resultat);
-            
+                resultatDAO.fjernResultat(resultat);
+            } else {
+                resultatDAO.oppdaterResultat(resultat);
+            }         
+            brukerDAO.oppdaterBruker(spillerSinTur); 
        
-        }
-		if (resultat.getSpiller_tur() == spillerPos) {
+		} else if (resultat.getSpiller_tur() == spillerPos) {
 			String terning1 = request.getParameter("terning1");
 			String terning2 = request.getParameter("terning2");
 			String terning3 = request.getParameter("terning3");

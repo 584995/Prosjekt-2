@@ -14,6 +14,7 @@ import database.Bruker;
 import database.BrukerDAO;
 import database.Resultat;
 import database.ResultatDAO;
+import yatzy.Mailer;
 /**
  * @author     Prosjektgruppe 2
  * @version     12                 
