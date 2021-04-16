@@ -16,24 +16,24 @@ public class ResultatDAO {
 	@PersistenceContext(name = "resultatPU")
 	private EntityManager em;
 	
-	public void lagreNyttResultat(Resultat nyttResultat) {
+	public synchronized void lagreNyttResultat(Resultat nyttResultat) {
 		em.persist(nyttResultat);
 	}
 	
-	public void oppdaterResultat(Resultat resultat) {
+	public synchronized void oppdaterResultat(Resultat resultat) {
 		em.merge(resultat);
 	}
 	
-	public List<Resultat> hentAlleResultat() {
+	public synchronized List<Resultat> hentAlleResultat() {
 		return em.createQuery("SELECT r FROM Resultat r",Resultat.class).getResultList();
 	}
 	
-	public Resultat hentResultat(Integer id) {
+	public synchronized Resultat hentResultat(Integer id) {
 		return em.find(Resultat.class, id);
 	}
 	
-	public void fjernResultat (Resultat resultat) {
-		em.remove(resultat);
+	public synchronized void fjernResultat (Integer id) {
+		em.createQuery("DELETE FROM Resultat r WHERE r.id = :id",Resultat.class).setParameter("id", id).executeUpdate();
 	}
 	
 }

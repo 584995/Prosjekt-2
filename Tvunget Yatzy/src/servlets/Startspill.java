@@ -61,6 +61,10 @@ public class Startspill extends HttpServlet {
 	                }
 				resultatDAO.oppdaterResultat(resultat);
 			}
+			for (Bruker bruker : resultat.getSpillere()) {
+				bruker.setPurringer(0);
+				brukerDAO.oppdaterBruker(bruker);
+			}
 			response.sendRedirect("Spill");
 			
 		}

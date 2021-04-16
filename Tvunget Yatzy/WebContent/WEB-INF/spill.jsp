@@ -205,8 +205,8 @@
 						<c:otherwise>
 							<h2>Vent på din tur.</h2>
 							<%
-	    						// Set refresh, autoload time as 2 seconds
-	    						response.setIntHeader("Refresh", 2);
+	    						// Set refresh, autoload time as 10 seconds
+	    						response.setIntHeader("Refresh", 10);
 	   	 					%>
 	   	 					 <form action="Spill" method="post">
                             <h3>Venter ${spillerSinTur} for lenge? <input type="submit" name="vekk" value="Vekk"></h3>
@@ -223,8 +223,8 @@
 					<button type="submit" >Start spill</button>
 				</form>
 				<%
-	    			// Set refresh, autoload time as 1 seconds
-	    			response.setIntHeader("Refresh", 1);
+	    			// Set refresh, autoload time as 10 seconds
+	    			response.setIntHeader("Refresh", 10);
 	   	 		%>
 			</c:otherwise>
 		</c:choose>

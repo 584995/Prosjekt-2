@@ -48,7 +48,13 @@ public class Bruker {
 	
 	//Fjerner resultat av yatzy spill eller runde for brukeren.
 	public void fjernResultat (Resultat resultat) {
-		resultater.remove(resultat);
+		int i = 0;
+		for (Resultat r : resultater) {
+			if (r.getId() == resultat.getId())
+				break;
+			i++;
+		}
+		resultater.remove(i);
 	}
 	
 	/**Sjekker om brukeren er i et spill.

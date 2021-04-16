@@ -16,23 +16,23 @@ public class BrukerDAO {
 	@PersistenceContext(name = "brukerPU")
 	private EntityManager em;
 	
-	public void lagreNyBruker(Bruker nyBruker) {
+	public synchronized void lagreNyBruker(Bruker nyBruker) {
 		em.persist(nyBruker);
 	}
 	
-	public void oppdaterBruker(Bruker bruker) {
+	public synchronized void oppdaterBruker(Bruker bruker) {
 		em.merge(bruker);
 	}
 	
-	public List<Bruker> hentAlleBrukere() {
+	public synchronized List<Bruker> hentAlleBrukere() {
 		return em.createQuery("SELECT b FROM Bruker b ",Bruker.class).getResultList();
 	}
 	
-	public Bruker hentBruker(String brukernavn) {
+	public synchronized Bruker hentBruker(String brukernavn) {
 		return em.find(Bruker.class, brukernavn);
 	}
 	
-	public void setEntityManager(EntityManager entityManager) {
+	public synchronized void setEntityManager(EntityManager entityManager) {
 		this.em = entityManager;
 	}
 }

@@ -180,7 +180,7 @@ public class Resultat {
 	public void fjernSpiller(Bruker spiller) {
 		int pos = spillerPos(spiller);
 		fjernKolonne(pos);
-		spillere.remove(spiller);
+		spillere.remove(pos);
 		kast_tur = 0;
 		if (spiller_tur == spillere.size()) {
 			spiller_tur = 0;
@@ -224,37 +224,48 @@ public class Resultat {
 			}
 			rad++;
 		}
+		String yatzytest = kast.substring(0,1);
+		boolean yatzySjekk = false;
+		if (kast.substring(1,2).equals(yatzytest) && kast.substring(2,3).equals(yatzytest) && kast.substring(3,4).equals(yatzytest) &&
+				kast.substring(4).equals(yatzytest) && yatzy.substring(12 + spiller_tur * 17, 13 + spiller_tur * 17).equals("0")){
+			if (spiller_tur == spillere.size())
+				yatzy = yatzy.substring(0, (spiller_tur * 17)) + String.format("%02d", runde) + kast + kast + kast;
+			else
+				yatzy = yatzy.substring(0, (spiller_tur * 17)) + String.format("%02d", runde) + kast + kast + kast + yatzy.substring(17 + spiller_tur * 17);
+			kast_tur = 2;
+			yatzySjekk = true;
+		}
 		
 		if (rad == 0)
-			enere = lagreHjelp(enere, kast);
+			enere = lagreHjelp(enere, kast, yatzySjekk);
 		else if (rad == 1)
-			toere = lagreHjelp(toere, kast);
+			toere = lagreHjelp(toere, kast, yatzySjekk);
 		else if (rad == 2)
-			treere = lagreHjelp(treere, kast);
+			treere = lagreHjelp(treere, kast, yatzySjekk);
 		else if (rad == 3)
-			firere = lagreHjelp(firere, kast);
+			firere = lagreHjelp(firere, kast, yatzySjekk);
 		else if (rad == 4)
-			femmere = lagreHjelp(femmere, kast);
+			femmere = lagreHjelp(femmere, kast, yatzySjekk);
 		else if (rad == 5)
-			seksere = lagreHjelp(seksere, kast);
+			seksere = lagreHjelp(seksere, kast, yatzySjekk);
 		else if (rad == 6)
-			ett_par = lagreHjelp(ett_par, kast);
+			ett_par = lagreHjelp(ett_par, kast, yatzySjekk);
 		else if (rad == 7)
-			to_par = lagreHjelp(to_par, kast);
+			to_par = lagreHjelp(to_par, kast, yatzySjekk);
 		else if (rad == 8)
-			tre_like = lagreHjelp(tre_like, kast);
+			tre_like = lagreHjelp(tre_like, kast, yatzySjekk);
 		else if (rad == 9)
-			fire_like = lagreHjelp(fire_like, kast);
+			fire_like = lagreHjelp(fire_like, kast, yatzySjekk);
 		else if (rad == 10)
-			liten_straight = lagreHjelp(liten_straight, kast);
+			liten_straight = lagreHjelp(liten_straight, kast, yatzySjekk);
 		else if (rad == 11)
-			stor_straight = lagreHjelp(stor_straight, kast);
+			stor_straight = lagreHjelp(stor_straight, kast, yatzySjekk);
 		else if (rad == 12)
-			hus = lagreHjelp(hus, kast);
+			hus = lagreHjelp(hus, kast, yatzySjekk);
 		else if (rad == 13)
-			sjanse = lagreHjelp(sjanse, kast);
+			sjanse = lagreHjelp(sjanse, kast, yatzySjekk);
 		else if (rad == 14)
-			yatzy = lagreHjelp(yatzy, kast);
+			yatzy = lagreHjelp(yatzy, kast, yatzySjekk);
 
 	}
 
@@ -262,9 +273,15 @@ public class Resultat {
 	 * 
 	 * @param rad Den aktuelle raden for spillet
 	 * @param kast Kastet som skal bli lagres
+	 * @param yatzySjekk Boolsk verdi om det er yatzy eller ikke
 	 * @return Raden etter den har blitt endret.
 	 */
-	private String lagreHjelp(String rad, String kast) {
+	private String lagreHjelp(String rad, String kast, boolean yatzySjekk) {
+		if (yatzySjekk) {
+			return rad.substring(0, (spiller_tur * 17)) + "00000000000000000"
+					+ rad.substring(17 + (spiller_tur * 17));
+		}
+		
 		if (kast_tur == 0) {
 			return rad.substring(0, (spiller_tur * 17) + (kast_tur * 5)) + String.format("%02d", runde) + kast
 					+ rad.substring(7 + (spiller_tur * 17) + (kast_tur * 5));

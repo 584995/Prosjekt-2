@@ -102,29 +102,29 @@ public class Spill extends HttpServlet {
             
             spillerSinTur.setPurringer(spillerSinTur.getPurringer()+1);
                 
-            if(spillerSinTur.getPurringer()==3) {
+            if(spillerSinTur.getPurringer()>2) {
             	try {
             		 Mailer.send(spillerSinTur.getEpost(), "Tvunget-Yatzy-Varsel", "Du ble kastet ut av spillet.");
 			 	} catch (Throwable e) {
-			 	}   
-                resultat.fjernSpiller(spillerSinTur);
-                spillerSinTur.fjernResultat(resultat);
-                spillerSinTur.setPurringer(0);
-                resultat.nesteSpiller();
+			 	}
+            	if (resultat.getSpillere().size() > 2) {
+            		resultat.fjernSpiller(spillerSinTur);
+                	spillerSinTur.fjernResultat(resultat);
+                	resultatDAO.oppdaterResultat(resultat);
+            	} else {
+            		spillerSinTur.fjernResultat(resultat);
+            		spiller.fjernResultat(resultat);
+            		resultatDAO.fjernResultat(resultat.getId());
+            		brukerDAO.oppdaterBruker(spiller);
+            	}                   
+                
             } else {
             	try {
 			 		Mailer.send(spillerSinTur.getEpost(), "Tvunget-Yatzy-Varsel", "Det er din tur nå.");
 			 	} catch (Throwable e) {
 			 	}             
             }
-            if(resultat.getSpillere().size()==1) {    
-                spiller.setPurringer(0);
-                brukerDAO.oppdaterBruker(spiller);
-                resultatDAO.fjernResultat(resultat);
-            } else {
-                resultatDAO.oppdaterResultat(resultat);
-            }         
-            brukerDAO.oppdaterBruker(spillerSinTur); 
+            brukerDAO.oppdaterBruker(spillerSinTur);
        
 		} else if (resultat.getSpiller_tur() == spillerPos) {
 			String terning1 = request.getParameter("terning1");

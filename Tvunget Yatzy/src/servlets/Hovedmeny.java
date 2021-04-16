@@ -94,11 +94,13 @@ public class Hovedmeny extends HttpServlet {
 			response.sendRedirect("Hovedmeny");
 		else {
 			String resId = request.getParameter("resultatId");
-			Resultat resultat = resultatDAO.hentResultat(Integer.parseInt(resId));
-			bruker.leggTilResultat(resultat);
-			brukerDAO.oppdaterBruker(bruker);
-			resultat.leggTilSpiller(bruker);
-			resultatDAO.oppdaterResultat(resultat);
+			if (!resId.equals("")) {
+				Resultat resultat = resultatDAO.hentResultat(Integer.parseInt(resId));
+				bruker.leggTilResultat(resultat);
+				brukerDAO.oppdaterBruker(bruker);
+				resultat.leggTilSpiller(bruker);
+				resultatDAO.oppdaterResultat(resultat);
+			}		
 			response.sendRedirect("Hovedmeny");
 		}
 
