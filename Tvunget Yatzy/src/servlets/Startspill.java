@@ -54,7 +54,10 @@ public class Startspill extends HttpServlet {
 			if (resultat.getSpillere().size() > 1) {
 				resultat.start();
 				 for(Bruker b: resultat.getSpillere()) {
-	                    Mailer.send(b.getEpost(), "Tvunget yatzy", "Tvunget yatzy har nå startet!");
+					 	try {
+					 		Mailer.send(b.getEpost(), "Tvunget yatzy", "Tvunget yatzy har nå startet!");
+					 	} catch (Throwable e) {
+					 	}             
 	                }
 				resultatDAO.oppdaterResultat(resultat);
 			}

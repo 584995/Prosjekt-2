@@ -103,13 +103,19 @@ public class Spill extends HttpServlet {
             spillerSinTur.setPurringer(spillerSinTur.getPurringer()+1);
                 
             if(spillerSinTur.getPurringer()==3) {
-                Mailer.send(spillerSinTur.getEpost(), "Tvunget-Yatzy-Varsel", "Du ble kastet ut av spillet.");
+            	try {
+            		 Mailer.send(spillerSinTur.getEpost(), "Tvunget-Yatzy-Varsel", "Du ble kastet ut av spillet.");
+			 	} catch (Throwable e) {
+			 	}   
                 resultat.fjernSpiller(spillerSinTur);
                 spillerSinTur.fjernResultat(resultat);
                 spillerSinTur.setPurringer(0);
                 resultat.nesteSpiller();
             } else {
-                Mailer.send(spillerSinTur.getEpost(), "Tvunget-Yatzy-Varsel", "Det er din tur nå.");
+            	try {
+			 		Mailer.send(spillerSinTur.getEpost(), "Tvunget-Yatzy-Varsel", "Det er din tur nå.");
+			 	} catch (Throwable e) {
+			 	}             
             }
             if(resultat.getSpillere().size()==1) {    
                 spiller.setPurringer(0);
